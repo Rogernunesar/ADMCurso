@@ -294,7 +294,7 @@ public class CadastroAluno extends javax.swing.JFrame {
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
          if(jTextFNome.getText().isEmpty()){//nao deixar o campos em branco
           JOptionPane.showMessageDialog(null, "Preencha o campo NOME para continuar!");
-          jTextFNome.requestFocus();
+            jTextFNome.requestFocus();
           }else{ 
                 if(jTextFEmail.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Preencha o campo EMAIL para continuar!!");
