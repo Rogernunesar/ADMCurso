@@ -9,6 +9,7 @@ import Dao.ConexaoBD;
 import Dao.CursoDAO;
 import Modelo.ModeloCursos;
 import Modelo.ModeloTabela;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -29,6 +30,9 @@ public class CadastroCurso extends javax.swing.JFrame {
         preencherTabela("select * from cursos order by nomeCurso");
         this.setTitle("CADASTRAR CURSO");
         this.setResizable(false);
+       
+         
+        
     }
 
     /**
@@ -60,6 +64,7 @@ public class CadastroCurso extends javax.swing.JFrame {
         jbSalvar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
         jTextFPesquisa = new javax.swing.JTextField();
+        jLabelTitulo = new javax.swing.JLabel();
 
         jbEditar.setText("Editar");
         jbEditar.setEnabled(false);
@@ -208,6 +213,12 @@ public class CadastroCurso extends javax.swing.JFrame {
             }
         });
 
+        jLabelTitulo.setBackground(new java.awt.Color(0, 204, 0));
+        jLabelTitulo.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(0, 153, 0));
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("CADASTRAR CURSOS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,6 +226,7 @@ public class CadastroCurso extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,14 +239,15 @@ public class CadastroCurso extends javax.swing.JFrame {
                             .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 44, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(0, 44, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jLabelTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbNovo)
@@ -386,7 +399,7 @@ public class CadastroCurso extends javax.swing.JFrame {
                             jTextFReqBasico.setEnabled(false);
                             jTextFPreco.setEnabled(false);
                             jTextFCargaHora.setEnabled(false);
-                            BotaoSalvarflag1();
+                            BotaoSalvarflag2();
                          preencherTabela("select * from cursos order by nomeCurso");
                         }
                     }
@@ -456,6 +469,7 @@ public void preencherTabela(String sql){
     
        public void BotaoSalvarflag1()
     {
+      jbNovo.setEnabled(true);
       jbSalvar.setEnabled(false);
       jbCancelar.setEnabled(false);
       jbEditar.setEnabled(false);
@@ -552,6 +566,7 @@ public void preencherTabela(String sql){
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFCargaHora;
@@ -567,4 +582,5 @@ public void preencherTabela(String sql){
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvar;
     // End of variables declaration//GEN-END:variables
+
 }
