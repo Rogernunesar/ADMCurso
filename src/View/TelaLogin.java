@@ -44,10 +44,10 @@ public class TelaLogin extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("USUÁRIO:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 68, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 68, -1));
 
         jLabel2.setText("SENHA:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
         getContentPane().add(jPasswordSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 121, 30));
 
         jButton1.setText("ENTRAR");
@@ -80,7 +80,7 @@ public class TelaLogin extends javax.swing.JFrame {
              conexao.executaSql("select * from usuario where nameUse ='"+jTextFieldUsuario.getText()+"'");
              conexao.result.first();
              if(conexao.result.getString("senhaUse").equals(jPasswordSenha.getText())){
-               TelaPrinciapal tela = new TelaPrinciapal();
+               TelaPrinciapal tela = new TelaPrinciapal(jTextFieldUsuario.getText());
                tela.setVisible(true);
                dispose();
                }else{
