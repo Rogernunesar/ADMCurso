@@ -5,18 +5,36 @@
  */
 package View;
 
+
+import Dao.ConexaoBD;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Rogerio
  */
 public class TelaPrinciapal extends javax.swing.JFrame {
-
+      ConexaoBD conexao = new ConexaoBD();
+      CadastroAluno telaluno= new CadastroAluno();
+      CadastroProf telaprof= new CadastroProf();
+      CadastroCurso telacurso= new CadastroCurso();
+      CadastroUser telauser= new CadastroUser();
+      TelaLogin telalogin = new TelaLogin();
     /**
      * Creates new form TelaPrinciapal
      */
-    public TelaPrinciapal() {
+    public TelaPrinciapal(String usuario) {
         initComponents();
+        jLabelUsuario.setText(usuario);
         this.setTitle("ADMCursos V.01");
+        conexao.conexao();
+    }
+
+    private TelaPrinciapal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -28,8 +46,8 @@ public class TelaPrinciapal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jLabelUsuario = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
@@ -41,6 +59,7 @@ public class TelaPrinciapal extends javax.swing.JFrame {
         jMenuFerramentas = new javax.swing.JMenu();
         jMenuFerrRelatório = new javax.swing.JMenuItem();
         jMenuFerrBackup = new javax.swing.JMenuItem();
+        jMenuTrocaUser = new javax.swing.JMenuItem();
         jMenuMatricular = new javax.swing.JMenu();
         jMenuItem1Matricular = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
@@ -49,26 +68,12 @@ public class TelaPrinciapal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 153));
         getContentPane().setLayout(null);
+        getContentPane().add(jLabelUsuario);
+        jLabelUsuario.setBounds(70, 410, 130, 30);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/botaoprofessor2.png"))); // NOI18N
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(640, 210, 50, 50);
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/usuario.jpg"))); // NOI18N
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(370, 90, 60, 50);
+        jLabel2.setText("Usuário : ");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(10, 414, 70, 20);
 
         jLabel1.setBackground(new java.awt.Color(0, 153, 204));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/fundook.png"))); // NOI18N
@@ -124,6 +129,14 @@ public class TelaPrinciapal extends javax.swing.JFrame {
         jMenuFerrBackup.setText("Backup");
         jMenuFerramentas.add(jMenuFerrBackup);
 
+        jMenuTrocaUser.setText("Trocar  Usuário");
+        jMenuTrocaUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTrocaUserActionPerformed(evt);
+            }
+        });
+        jMenuFerramentas.add(jMenuTrocaUser);
+
         jMenuBar1.add(jMenuFerramentas);
 
         jMenuMatricular.setText("Matricular");
@@ -152,38 +165,79 @@ public class TelaPrinciapal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuCadastroAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroAlunoActionPerformed
-        CadastroAluno tela = new CadastroAluno();
-               tela.setVisible(true);
+    
+          try {
+              conexao.executaSql("select * from usuario where nameUse='"+jLabelUsuario.getText()+"'");
+              conexao.result.first();
+              if(conexao.result.getString("tipoUser").equals("Administrador")||conexao.result.getString("tipoUser").equals("Secretaria"))
+              {
+                  telaluno.setVisible(true);
+              }else{
+                    JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuário \n        Contate o seu Administrador");
+                   }     
+                      } catch (SQLException ex) {
+                          JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuáio \n       Contact o seu Administrador"+ex);
+                  
+          }
+               
     }//GEN-LAST:event_jMenuCadastroAlunoActionPerformed
 
     private void jMenuItem2SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2SairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2SairActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      CadastroAluno tela = new CadastroAluno();
-               tela.setVisible(true);  // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jMenuCadastroProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroProfActionPerformed
-        CadastroProf tela= new CadastroProf();
-               tela.setVisible(true);
+         try {
+              conexao.executaSql("select * from usuario where nameUse='"+jLabelUsuario.getText()+"'");
+              conexao.result.first();
+              if(conexao.result.getString("tipoUser").equals("Administrador")||conexao.result.getString("tipoUser").equals("Secretaria"))
+              {
+                  telaprof.setVisible(true);
+              }else{
+                    JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuário \n        Contate o seu Administrador");
+                   }     
+                      } catch (SQLException ex) {
+                          JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuáio \n       Contact o seu Administrador"+ex);
+                  
+          }
     }//GEN-LAST:event_jMenuCadastroProfActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CadastroProf tela= new CadastroProf();
-               tela.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void JMenuCadastroUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuCadastroUserActionPerformed
-      CadastroUser tela= new CadastroUser();
-               tela.setVisible(true);
+      try {
+              conexao.executaSql("select * from usuario where nameUse='"+jLabelUsuario.getText()+"'");
+              conexao.result.first();
+              if(conexao.result.getString("tipoUser").equals("Administrador"))
+              {
+                  telauser.setVisible(true);
+              }else{
+                    JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuário \n        Contate o seu Administrador");
+                   }     
+                      } catch (SQLException ex) {
+                          JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuáio \n       Contact o seu Administrador"+ex);
+                  
+          }
     }//GEN-LAST:event_JMenuCadastroUserActionPerformed
 
     private void jMenuCadastroCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroCursoActionPerformed
-        CadastroCurso tela= new CadastroCurso();
-               tela.setVisible(true);
+        try {
+              conexao.executaSql("select * from usuario where nameUse='"+jLabelUsuario.getText()+"'");
+              conexao.result.first();
+              if(conexao.result.getString("tipoUser").equals("Administrador")||conexao.result.getString("tipoUser").equals("Secretaria"))
+              {
+                  telacurso.setVisible(true);
+              }else{
+                    JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuário \n        Contate o seu Administrador");
+                   }     
+                      } catch (SQLException ex) {
+                          JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuáio \n       Contact o seu Administrador"+ex);
+                  
+          }
     }//GEN-LAST:event_jMenuCadastroCursoActionPerformed
+
+    private void jMenuTrocaUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTrocaUserActionPerformed
+        telalogin.setVisible(true);
+               dispose();
+    }//GEN-LAST:event_jMenuTrocaUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,9 +276,9 @@ public class TelaPrinciapal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem JMenuCadastroUser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenuItem jMenuCadastroAluno;
@@ -238,5 +292,6 @@ public class TelaPrinciapal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2Sair;
     private javax.swing.JMenu jMenuMatricular;
     private javax.swing.JMenu jMenuSair;
+    private javax.swing.JMenuItem jMenuTrocaUser;
     // End of variables declaration//GEN-END:variables
 }
