@@ -21,6 +21,7 @@ public class TelaLogin extends javax.swing.JFrame {
     public TelaLogin() {
         initComponents();
         this.setTitle("LOGAR NO ADMCURSOS");
+        this.setResizable(false);
     }
 
     /**
@@ -82,6 +83,8 @@ public class TelaLogin extends javax.swing.JFrame {
              if(conexao.result.getString("senhaUse").equals(jPasswordSenha.getText())){
                TelaPrinciapal tela = new TelaPrinciapal(jTextFieldUsuario.getText());
                tela.setVisible(true);
+               tela.setResizable(false);
+               
                dispose();
                }else{
                      JOptionPane.showMessageDialog(rootPane,"Senha ou Usuário não conferem!");
@@ -129,6 +132,7 @@ public class TelaLogin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaLogin().setVisible(true);
+                
             }
         });
     }

@@ -24,6 +24,10 @@ public class CadastroUser extends javax.swing.JFrame {
      
     public CadastroUser() {
         initComponents();
+        this.setResizable(false);
+        this.setTitle("CADASTRO DE USUÁRIO");
+        
+        
     }
 
     /**

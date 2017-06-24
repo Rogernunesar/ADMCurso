@@ -28,6 +28,7 @@ public class CadastroCurso extends javax.swing.JFrame {
         initComponents();
         preencherTabela("select * from cursos order by nomeCurso");
         this.setTitle("CADASTRAR CURSO");
+        this.setResizable(false);
     }
 
     /**

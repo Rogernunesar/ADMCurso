@@ -29,6 +29,7 @@ public class CadastroAluno extends javax.swing.JFrame {
      public CadastroAluno() {
         initComponents();
         this.setTitle("CADASTRO DE ALUNO");
+        this.setResizable(false);
         preencherTabela("select * from alunos order by nomeAluno");
     }     
     
