@@ -6,6 +6,8 @@
 package View;
 
 import Dao.ConexaoBD;
+import Dao.TurmasDAO;
+import Modelo.ModeloTurmas;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -16,12 +18,17 @@ import javax.swing.JOptionPane;
  */
 public class CadastroTurmas extends javax.swing.JFrame {
            ConexaoBD conexao = new ConexaoBD();
+           ModeloTurmas turmas = new ModeloTurmas();
+           TurmasDAO turmadao = new TurmasDAO();
+                   
            int flag = 0;
     /**
      * Creates new form CadastroTurmas
      */
     public CadastroTurmas() {
         initComponents();
+        preencherProf();
+        preencherCurso();
     }
 
     /**
@@ -40,9 +47,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
         jbCancelar = new javax.swing.JButton();
         jLabelTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jTextFCargaHora = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -52,8 +57,10 @@ public class CadastroTurmas extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jTextFieldNomeTurma = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateChooserinicio = new com.toedter.calendar.JDateChooser();
+        jDateChooserfim = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldCargaHora = new javax.swing.JTextField();
         jbNovo = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
@@ -110,16 +117,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jTextFCargaHora.setEnabled(false);
-        jTextFCargaHora.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFCargaHoraActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Professor:");
-
-        jLabel3.setText("Carga Horária");
 
         jLabel4.setText("Cursos:");
 
@@ -131,8 +129,10 @@ public class CadastroTurmas extends javax.swing.JFrame {
         jTextFIdTurmas.setEnabled(false);
 
         jComboBoxProf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxProf.setEnabled(false);
 
         jComboBoxCursos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCursos.setEnabled(false);
 
         jLabel6.setText("Fim do Curso:");
 
@@ -140,11 +140,15 @@ public class CadastroTurmas extends javax.swing.JFrame {
 
         jTextFieldNomeTurma.setEnabled(false);
 
-        jDateChooser1.setEnabled(false);
-        jDateChooser1.setFocusable(false);
-        jDateChooser1.setRequestFocusEnabled(false);
+        jDateChooserinicio.setEnabled(false);
+        jDateChooserinicio.setFocusable(false);
+        jDateChooserinicio.setRequestFocusEnabled(false);
 
-        jDateChooser2.setEnabled(false);
+        jDateChooserfim.setEnabled(false);
+
+        jLabel8.setText("Carga Hora");
+
+        jTextFieldCargaHora.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -162,21 +166,20 @@ public class CadastroTurmas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jDateChooserinicio, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFCargaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
+                                .addComponent(jTextFieldCargaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel7)
                                 .addGap(8, 8, 8)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextFieldNomeTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(44, 44, 44)
                                 .addComponent(jLabel1)
@@ -186,7 +189,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
                                 .addGap(34, 34, 34)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jDateChooserfim, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -196,20 +199,22 @@ public class CadastroTurmas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jDateChooserinicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(6, 6, 6)
                             .addComponent(jLabel5)))
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooserfim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFCargaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextFieldNomeTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jTextFieldNomeTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(jTextFieldCargaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,7 +300,43 @@ public class CadastroTurmas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public void preencherProf(){
+   conexao.conexao();
+   conexao.executaSql("Select * from professores order by nomeProf");
+   
+               try {
+                   conexao.result.first();
+                   jComboBoxProf.removeAllItems();
+                   do{
+                       jComboBoxProf.addItem(conexao.result.getString("nomeProf"));
+                   
+                   }while (conexao.result.next());
+                   
+               } catch (SQLException ex) {
+                   JOptionPane.showMessageDialog(null, "Erro ao preencher professores"+ex);
+               }
+               
+               conexao.desconecta();
+}
 
+public void preencherCurso(){
+   conexao.conexao();
+   conexao.executaSql("Select * from cursos order by nomeCurso");
+   
+               try {
+                   conexao.result.first();
+                   jComboBoxCursos.removeAllItems();
+                   do{
+                       jComboBoxCursos.addItem(conexao.result.getString("nomeCurso"));
+                   
+                   }while (conexao.result.next());
+                   
+               } catch (SQLException ex) {
+                   JOptionPane.showMessageDialog(null, "Erro ao preencher Cursos"+ex);
+               }
+               
+               conexao.desconecta();
+}
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         flag = 2;
       
@@ -307,23 +348,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void JTableCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableCursosMouseClicked
-        String nomeCursos= ""+JTableCursos.getValueAt(JTableCursos.getSelectedRow(), 1);
-        conexao.conexao();
-        conexao.executaSql("select * from cursos where nomeCurso = '"+nomeCursos+"'");
-
-        try {
-            conexao.result.first();
-            jTextFIdTurmas.setText(String.valueOf(conexao.result.getInt("idCurso")));
-            
-            jTextFCargaHora.setText(conexao.result.getString("reqbasico"));
-           // jTextFDataInicio.setText(String.valueOf(conexao.result.getString("cargaHora")));
-            
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro ao selecionar dados"+ex);
-        }
-        conexao.desconecta();
-        BotaoPesquisar();
+      
     }//GEN-LAST:event_JTableCursosMouseClicked
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
@@ -331,17 +356,28 @@ public class CadastroTurmas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jbCancelarActionPerformed
 
-    private void jTextFCargaHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFCargaHoraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFCargaHoraActionPerformed
-
     private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
         flag = 1;
-        
+        jComboBoxProf.setEnabled(true);
+        jComboBoxCursos.setEnabled(true);
+        jTextFieldNomeTurma.setEnabled(true);
+        jDateChooserinicio.setEnabled(true);
+        jDateChooserfim.setEnabled(true);
+        jTextFieldCargaHora.setEnabled(true);
         BotaoNovo();
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        turmas.setNomeprof((String)jComboBoxProf.getSelectedItem());
+        turmas.setNomecurso((String)jComboBoxCursos.getSelectedItem());
+        turmas.setNometurma(jTextFieldNomeTurma.getText());
+        turmas.setDatainicio(jDateChooserinicio.getDate());
+        turmas.setDatafinal(jDateChooserfim.getDate());
+        turmas.setCargahora(Integer.parseInt(jTextFieldCargaHora.getText()));
+        turmadao.Salvar(turmas);
+        
+        
+        
         
     }//GEN-LAST:event_jbSalvarActionPerformed
 
@@ -443,21 +479,21 @@ public class CadastroTurmas extends javax.swing.JFrame {
     private javax.swing.JTable JTableCursos;
     private javax.swing.JComboBox jComboBoxCursos;
     private javax.swing.JComboBox jComboBoxProf;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooserfim;
+    private com.toedter.calendar.JDateChooser jDateChooserinicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFCargaHora;
     private javax.swing.JTextField jTextFIdTurmas;
     private javax.swing.JTextField jTextFPesquisa;
+    private javax.swing.JTextField jTextFieldCargaHora;
     private javax.swing.JTextField jTextFieldNomeTurma;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEditar;
