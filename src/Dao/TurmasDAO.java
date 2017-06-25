@@ -8,8 +8,6 @@ package Dao;
 import Modelo.ModeloTurmas;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,7 +29,7 @@ public class TurmasDAO {
          conexao.conexao();
          
         try {
-            PreparedStatement pstm = conexao.con.prepareStatement("Select max(idAluno)from alunos");
+            PreparedStatement pstm = conexao.con.prepareStatement("Select max(idTurmas)from turmas");
              conexao.result = pstm.executeQuery();
              conexao.result.next();
              int id = conexao.result.getInt(1);
@@ -40,10 +38,10 @@ public class TurmasDAO {
             pst.setInt(1, id);
             pst.setInt(2, idProf);
             pst.setInt(3, idCurso);
-            pst.setString(4, turma.getNometurma());
-            pst.setDate(5, new java.sql.Date(turma.getDatainicio().getTime()));
-            pst.setDate(6, new java.sql.Date(turma.getDatafinal().getTime()));
-            pst.setInt(7, turma.getCargahora());
+            pst.setString(4, turmas.getNometurma());
+            pst.setDate(5, new java.sql.Date(turmas.getDatainicio().getTime()));
+            pst.setDate(6, new java.sql.Date(turmas.getDatafinal().getTime()));
+            pst.setInt(7, turmas.getCargahora());
             pst.execute();
             JOptionPane.showMessageDialog(null,"Turma inserida com sucesso");
         } catch (SQLException ex) {
@@ -54,7 +52,7 @@ public class TurmasDAO {
     
     public void BuscarProf(String nomeProf){
        conexaoprof.conexao();
-       conexaoprof.executaSql("select * from professores where nameProf='"+nomeProf+"'");
+       conexaoprof.executaSql("select * from professores where nomeProf='"+nomeProf+"'");
         try {
             conexaoprof.result.first();
             idProf = conexaoprof.result.getInt("idProf");
