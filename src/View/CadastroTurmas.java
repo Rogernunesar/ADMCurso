@@ -7,9 +7,12 @@ package View;
 
 import Dao.ConexaoBD;
 import Dao.TurmasDAO;
+import Modelo.ModeloTabela;
 import Modelo.ModeloTurmas;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 
 /**
@@ -18,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class CadastroTurmas extends javax.swing.JFrame {
            ConexaoBD conexao = new ConexaoBD();
-           ModeloTurmas turmas = new ModeloTurmas();
+           ModeloTurmas modturma = new ModeloTurmas();
            TurmasDAO turmadao = new TurmasDAO();
                    
            int flag = 0;
@@ -29,6 +32,13 @@ public class CadastroTurmas extends javax.swing.JFrame {
         initComponents();
         preencherProf();
         preencherCurso();
+        preencherTabela("select a.nomeTurmas, a.dataInicio, a.dataFinal, a.cargaHora, b.nomeProf, c.nomeCurso\n" +
+                        "from turmas a \n" +
+                        "Inner join professores b Inner join cursos c\n" +
+                        "on a.idProf = b.idProf \n" +
+                        "and a.idCurso= c.idCurso\n" +
+                        "order by nomeTurmas;");
+        
     }
 
     /**
@@ -43,7 +53,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
         jbEditar = new javax.swing.JButton();
         jbPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JTableCursos = new javax.swing.JTable();
+        JTableTurmas = new javax.swing.JTable();
         jbCancelar = new javax.swing.JButton();
         jLabelTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -51,7 +61,6 @@ public class CadastroTurmas extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextFIdTurmas = new javax.swing.JTextField();
         jComboBoxProf = new javax.swing.JComboBox();
         jComboBoxCursos = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
@@ -61,6 +70,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
         jDateChooserfim = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         jTextFieldCargaHora = new javax.swing.JTextField();
+        jTextFieldIdTurmas = new javax.swing.JTextField();
         jbNovo = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
@@ -83,7 +93,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
             }
         });
 
-        JTableCursos.setModel(new javax.swing.table.DefaultTableModel(
+        JTableTurmas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -94,12 +104,12 @@ public class CadastroTurmas extends javax.swing.JFrame {
 
             }
         ));
-        JTableCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+        JTableTurmas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableCursosMouseClicked(evt);
+                JTableTurmasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(JTableCursos);
+        jScrollPane1.setViewportView(JTableTurmas);
 
         jbCancelar.setText("Cancelar");
         jbCancelar.setEnabled(false);
@@ -124,9 +134,6 @@ public class CadastroTurmas extends javax.swing.JFrame {
         jLabel5.setText("Inicio do Curso:");
 
         jLabel1.setText("Codigo:");
-
-        jTextFIdTurmas.setEditable(false);
-        jTextFIdTurmas.setEnabled(false);
 
         jComboBoxProf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxProf.setEnabled(false);
@@ -156,16 +163,8 @@ public class CadastroTurmas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxProf, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -184,14 +183,23 @@ public class CadastroTurmas extends javax.swing.JFrame {
                                 .addGap(44, 44, 44)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jDateChooserfim, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxProf, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,8 +218,8 @@ public class CadastroTurmas extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
                         .addComponent(jTextFieldNomeTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addComponent(jTextFieldIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
                         .addComponent(jTextFieldCargaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -255,25 +263,31 @@ public class CadastroTurmas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(96, 96, 96)
+                                .addComponent(jTextFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                                .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +295,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
                 .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbNovo)
@@ -289,13 +303,13 @@ public class CadastroTurmas extends javax.swing.JFrame {
                         .addComponent(jbCancelar)
                         .addComponent(jbEditar))
                     .addComponent(jbExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbPesquisar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -339,59 +353,187 @@ public void preencherCurso(){
 }
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         flag = 2;
-      
-        BotaoEditar();
-    }//GEN-LAST:event_jbEditarActionPerformed
-
-    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-       
-    }//GEN-LAST:event_jbPesquisarActionPerformed
-
-    private void JTableCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableCursosMouseClicked
-      
-    }//GEN-LAST:event_JTableCursosMouseClicked
-
-    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
-
-        
-    }//GEN-LAST:event_jbCancelarActionPerformed
-
-    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
-        flag = 1;
+        jTextFieldIdTurmas.setEnabled(true);
         jComboBoxProf.setEnabled(true);
         jComboBoxCursos.setEnabled(true);
         jTextFieldNomeTurma.setEnabled(true);
         jDateChooserinicio.setEnabled(true);
         jDateChooserfim.setEnabled(true);
         jTextFieldCargaHora.setEnabled(true);
-        BotaoNovo();
+        botaoEditar();
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+       modturma.setPesquisar(jTextFPesquisa.getText());
+       ModeloTurmas turma1 = turmadao.buscarTurmas(modturma);
+       jTextFieldIdTurmas.setText(String.valueOf(turma1.getIdturmas()));
+       jComboBoxProf.setSelectedItem(turma1.getNomeprof());
+       jComboBoxCursos.setSelectedItem(turma1.getNomecurso());
+       jTextFieldNomeTurma.setText(turma1.getNometurma());
+       jDateChooserinicio.setDate(turma1.getDatainicio());
+       jDateChooserfim.setDate(turma1.getDatafinal());
+       jTextFieldCargaHora.setText(String.valueOf(turma1.getCargahora()));
+       jTextFieldNomeTurma.setText(turma1.getNometurma());
+       jbEditar.setEnabled(true);
+       botaoPesquisar();
+       
+    }//GEN-LAST:event_jbPesquisarActionPerformed
+
+    private void JTableTurmasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableTurmasMouseClicked
+      
+    }//GEN-LAST:event_JTableTurmasMouseClicked
+
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+            jTextFieldNomeTurma.setText("");
+            jDateChooserinicio.setDate(null);
+            jDateChooserfim.setDate(null);
+            jTextFieldCargaHora.setText("");
+                
+            jComboBoxProf.setEnabled(!true);
+            jComboBoxCursos.setEnabled(!true);
+            jTextFieldNomeTurma.setEnabled(!true);
+            jDateChooserinicio.setEnabled(!true);
+            jDateChooserfim.setEnabled(!true);
+            jTextFieldCargaHora.setEnabled(!true); 
+            botaoCancelar();
+                 
+        
+    }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+            flag = 1;
+            jComboBoxProf.setEnabled(true);
+            jComboBoxCursos.setEnabled(true);
+            jTextFieldNomeTurma.setEnabled(true);
+            jDateChooserinicio.setEnabled(true);
+            jDateChooserfim.setEnabled(true);
+            jTextFieldCargaHora.setEnabled(true);
+            botaoNovo();
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-        turmas.setNomeprof((String)jComboBoxProf.getSelectedItem());
-        turmas.setNomecurso((String)jComboBoxCursos.getSelectedItem());
-        turmas.setNometurma(jTextFieldNomeTurma.getText());
-        turmas.setDatainicio(jDateChooserinicio.getDate());
-        turmas.setDatafinal(jDateChooserfim.getDate());
-        turmas.setCargahora(Integer.parseInt(jTextFieldCargaHora.getText()));
-        turmadao.Salvar(turmas);
         
-        
-        
-        
+       /* if(jTextFUser.getText().isEmpty()){//nao deixar o campos em branco
+            JOptionPane.showMessageDialog(null, "Preencha o campo USUARIO para continuar!");
+            jTextFUser.requestFocus();
+        }else if(jPasswordFieldSenha.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Preencha o campo SENHA para continuar!!");
+                jPasswordFieldSenha.requestFocus();
+        }else if(jPasswordFieldConfSenha.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Preencha o campo CONFIRMA SENHA para continuar!");
+                jPasswordFieldConfSenha.requestFocus();
+        }else */
+            if(flag == 1)
+                {
+                modturma.setNomeprof((String)jComboBoxProf.getSelectedItem());
+                modturma.setNomecurso((String)jComboBoxCursos.getSelectedItem());
+                modturma.setNometurma(jTextFieldNomeTurma.getText());
+                modturma.setDatainicio(jDateChooserinicio.getDate());
+                modturma.setDatafinal(jDateChooserfim.getDate());
+                modturma.setCargahora(Integer.parseInt(jTextFieldCargaHora.getText()));
+                turmadao.Salvar(modturma);
+
+                jTextFieldNomeTurma.setText("");
+                jDateChooserinicio.setDate(null);
+                jDateChooserfim.setDate(null);
+                jTextFieldCargaHora.setText("");
+                
+                jComboBoxProf.setEnabled(!true);
+                jComboBoxCursos.setEnabled(!true);
+                jTextFieldNomeTurma.setEnabled(!true);
+                jDateChooserinicio.setEnabled(!true);
+                jDateChooserfim.setEnabled(!true);
+                jTextFieldCargaHora.setEnabled(!true);
+                
+                botaoSalvarflag1();
+                //preencherTabela("select * from alunos order by nomeAluno");//para atualizar a tabela
+
+            }else
+            {
+                // modturma.setIdturmas(Integer.parseInt(jTextFieldIdTurmas.getText()));
+                 modturma.setNomeprof((String)jComboBoxProf.getSelectedItem());
+                 modturma.setNomecurso((String)jComboBoxCursos.getSelectedItem());
+                 modturma.setNometurma(jTextFieldNomeTurma.getText());
+                 modturma.setDatainicio(jDateChooserinicio.getDate());
+                 modturma.setDatafinal(jDateChooserfim.getDate());
+                 modturma.setCargahora(Integer.parseInt(jTextFieldCargaHora.getText()));
+                 turmadao.EditarTurmas(modturma);
+                 jTextFieldNomeTurma.setText("");
+                 jDateChooserinicio.setDate(null);
+                 jDateChooserfim.setDate(null);
+                 jTextFieldCargaHora.setText("");
+                
+                 jComboBoxProf.setEnabled(!true);
+                 jComboBoxCursos.setEnabled(!true);
+                 jTextFieldNomeTurma.setEnabled(!true);
+                 jDateChooserinicio.setEnabled(!true);
+                 jDateChooserfim.setEnabled(!true);
+                 jTextFieldCargaHora.setEnabled(!true);
+                botaoSalvarflag2();
+            }    
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
-        
+         int resposta = 0 ;
+         resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja realmente excluir a Turma");
+         if(resposta== JOptionPane.YES_OPTION)
+             modturma.setIdturmas(Integer.valueOf(jTextFieldIdTurmas.getText()));
+             turmadao.excluirTurmas(modturma);
+             jTextFieldNomeTurma.setText("");
+             jDateChooserinicio.setDate(null);
+             jDateChooserfim.setDate(null);
+             jTextFieldCargaHora.setText("");
+                
+             jComboBoxProf.setEnabled(!true);
+             jComboBoxCursos.setEnabled(!true);
+             jTextFieldNomeTurma.setEnabled(!true);
+             jDateChooserinicio.setEnabled(!true);
+             jDateChooserfim.setEnabled(!true);
+             jTextFieldCargaHora.setEnabled(!true);
+             botaoExcluir();
     }//GEN-LAST:event_jbExcluirActionPerformed
 
-      public void BotaoNovo()
+    public void preencherTabela(String sql){
+        ArrayList dados = new ArrayList();
+        String [] colunas = new String[]{"Nome", "Inicio", "Termino", "Carga", "Professor", "Curso"};
+        conexao.conexao();
+        conexao.executaSql(sql);
+        
+         try {
+             conexao.result.first();
+             do{
+                dados.add(new Object[]{conexao.result.getString("nomeTurmas"),conexao.result.getDate("dataInicio"), conexao.result.getDate("dataFinal"), conexao.result.getInt("cargaHora") ,conexao.result.getString("nomeProf"),conexao.result.getString("nomeCurso")});  
+             }while(conexao.result.next());
+         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane,"Digite outro nome"+ex);
+         }
+         ModeloTabela modelo = new ModeloTabela(dados, colunas);
+         
+         JTableTurmas.setModel(modelo);
+         JTableTurmas.getColumnModel().getColumn(0).setPreferredWidth(80);
+         JTableTurmas.getColumnModel().getColumn(0).setResizable(false);
+         JTableTurmas.getColumnModel().getColumn(1).setPreferredWidth(77);
+         JTableTurmas.getColumnModel().getColumn(1).setResizable(false);
+         JTableTurmas.getColumnModel().getColumn(2).setPreferredWidth(77);
+         JTableTurmas.getColumnModel().getColumn(2).setResizable(false);
+         JTableTurmas.getColumnModel().getColumn(3).setPreferredWidth(45);
+         JTableTurmas.getColumnModel().getColumn(3).setResizable(false);
+         JTableTurmas.getColumnModel().getColumn(4).setPreferredWidth(180);
+         JTableTurmas.getColumnModel().getColumn(4).setResizable(false);
+         JTableTurmas.getColumnModel().getColumn(5).setPreferredWidth(152);
+         JTableTurmas.getColumnModel().getColumn(5).setResizable(false);
+         JTableTurmas.getTableHeader().setReorderingAllowed(false);
+         JTableTurmas.setAutoResizeMode(JTableTurmas.AUTO_RESIZE_OFF);
+         JTableTurmas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+         conexao.desconecta();   
+    }
+      public void botaoNovo()
     {
        jbSalvar.setEnabled(true);
        jbCancelar.setEnabled(true);
     }
     
-       public void BotaoSalvarflag1()
+       public void botaoSalvarflag1()
     {
       jbNovo.setEnabled(true);
       jbSalvar.setEnabled(false);
@@ -399,14 +541,14 @@ public void preencherCurso(){
       jbEditar.setEnabled(false);
       jbExcluir.setEnabled(false);
     }
-       public void BotaoSalvarflag2()
+       public void botaoSalvarflag2()
     {
       jbSalvar.setEnabled(false);
       jbNovo.setEnabled(true);
       jbCancelar.setEnabled(false);
     }
     
-       public void BotaoEditar()
+       public void botaoEditar()
     {
        jbSalvar.setEnabled(true);
        jbNovo.setEnabled(true);
@@ -416,7 +558,7 @@ public void preencherCurso(){
        jbExcluir.setEnabled(false);
     }
     
-       public void BotaoCancelar()
+       public void botaoCancelar()
     {
        jbSalvar.setEnabled(!true);
        jbCancelar.setEnabled(!true);
@@ -425,7 +567,7 @@ public void preencherCurso(){
        jbExcluir.setEnabled(false);
     }
        
-       public void BotaoExcluir()
+       public void botaoExcluir()
     {
        
        jbEditar.setEnabled(false);
@@ -434,7 +576,7 @@ public void preencherCurso(){
        jbExcluir.setEnabled(false);
     }
        
-        public void BotaoPesquisar()
+        public void botaoPesquisar()
     {
       jbCancelar.setEnabled(true);
       jbEditar.setEnabled(true);
@@ -476,7 +618,7 @@ public void preencherCurso(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable JTableCursos;
+    private javax.swing.JTable JTableTurmas;
     private javax.swing.JComboBox jComboBoxCursos;
     private javax.swing.JComboBox jComboBoxProf;
     private com.toedter.calendar.JDateChooser jDateChooserfim;
@@ -491,9 +633,9 @@ public void preencherCurso(){
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFIdTurmas;
     private javax.swing.JTextField jTextFPesquisa;
     private javax.swing.JTextField jTextFieldCargaHora;
+    private javax.swing.JTextField jTextFieldIdTurmas;
     private javax.swing.JTextField jTextFieldNomeTurma;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEditar;
