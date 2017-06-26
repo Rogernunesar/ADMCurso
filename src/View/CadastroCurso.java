@@ -9,7 +9,6 @@ import Dao.ConexaoBD;
 import Dao.CursoDAO;
 import Modelo.ModeloCursos;
 import Modelo.ModeloTabela;
-import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -412,7 +411,7 @@ public class CadastroCurso extends javax.swing.JFrame {
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
        int resposta = 0;
-          resposta = JOptionPane.showConfirmDialog(rootPane,"Deseja relmente excluir o Curso");
+          resposta = JOptionPane.showConfirmDialog(rootPane,"Deseja realmente excluir o Curso");
           if(resposta == JOptionPane.YES_OPTION)
               mod.setIdcurso(Integer.valueOf(jTextFIdCurso.getText()));
               controle.Excluir(mod);
@@ -455,9 +454,7 @@ public void preencherTabela(String sql){
          JTableCursos.getTableHeader().setReorderingAllowed(false);
          JTableCursos.setAutoResizeMode(JTableCursos.AUTO_RESIZE_OFF);
          JTableCursos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-         conexao.desconecta();
-         
-         
+         conexao.desconecta();   
     }
 
 //Declaração dos metodos para ativar e desativar os botões do formulario
