@@ -27,8 +27,8 @@ CONSTRAINT PK_IDPROF PRIMARY KEY (idProf)
 
 CREATE TABLE TURMAS(
 idTurmas     INT NOT NULL,
-idProf       INT NOT NULL,
-idCurso      INT NOT NULL,
+tur_idProf       INT NOT NULL,
+tur_idCurso      INT NOT NULL,
 dataInicio   DATE NULL,
 dataFinal    DATE NULL,
 cargaHora   SMALLINT,
@@ -80,3 +80,9 @@ ALTER TABLE usuario ADD tipoUser VARCHAR(20) NULL;
 
 show tables;
 
+SELECT a.nomeTurmas, a.dataInicio, a.dataFinal, a.cargaHora, b.nomeProf, c.nomeCurso
+FROM turmas a
+INNER JOIN professores b INNER JOIN cursos c
+ON a.tur_idProf = b.idProf 
+AND a.tur_idCurso= c.idCurso
+ORDER BY nomeTurmas;
