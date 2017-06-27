@@ -23,7 +23,9 @@ public class TelaPrinciapal extends javax.swing.JFrame {
       CadastroCurso telacurso= new CadastroCurso();
       CadastroUser telauser= new CadastroUser();
       TelaLogin telalogin = new TelaLogin();
-    /**
+      CadastroTurmas telaturmas = new CadastroTurmas();
+      
+    /*
      * Creates new form TelaPrinciapal
      */
     public TelaPrinciapal(String usuario) {
@@ -109,6 +111,11 @@ public class TelaPrinciapal extends javax.swing.JFrame {
         jMenuCadastro.add(jMenuCadastroCurso);
 
         jMenuCadastroTurma.setText("Turmas");
+        jMenuCadastroTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCadastroTurmaActionPerformed(evt);
+            }
+        });
         jMenuCadastro.add(jMenuCadastroTurma);
 
         JMenuCadastroUser.setText("Usuários");
@@ -238,6 +245,22 @@ public class TelaPrinciapal extends javax.swing.JFrame {
         telalogin.setVisible(true);
                dispose();
     }//GEN-LAST:event_jMenuTrocaUserActionPerformed
+
+    private void jMenuCadastroTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroTurmaActionPerformed
+       try {
+              conexao.executaSql("select * from usuario where nameUse='"+jLabelUsuario.getText()+"'");
+              conexao.result.first();
+              if(conexao.result.getString("tipoUser").equals("Administrador"))
+              {
+                  telaturmas.setVisible(true);
+              }else{
+                    JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuário \n        Contate o seu Administrador");
+                   }     
+                      } catch (SQLException ex) {
+                          JOptionPane.showMessageDialog(null,"Funcionalidade não permitida para este Usuáio \n       Contact o seu Administrador"+ex);
+                  
+          }
+    }//GEN-LAST:event_jMenuCadastroTurmaActionPerformed
 
     /**
      * @param args the command line arguments
