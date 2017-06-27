@@ -32,6 +32,8 @@ public class CadastroTurmas extends javax.swing.JFrame {
         initComponents();
         preencherProf();
         preencherCurso();
+        this.setTitle("CADASTRAR TURMAS");
+        this.setResizable(false);
         preencherTabela("select a.nomeTurmas, a.dataInicio, a.dataFinal, a.cargaHora, b.nomeProf, c.nomeCurso\n" +
                         "from turmas a \n" +
                         "Inner join professores b Inner join cursos c\n" +
