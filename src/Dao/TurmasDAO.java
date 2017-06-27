@@ -6,11 +6,8 @@
 package Dao;
 
 import Modelo.ModeloTurmas;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,7 +36,7 @@ public class TurmasDAO {
              conexao.result.next();
              int id = conexao.result.getInt(1);
              id++;
-            PreparedStatement pst = conexao.con.prepareStatement("insert into turmas(idTurmas, idProf, idCurso, nomeTurmas, dataInicio, dataFinal, cargaHora)values(?,?,?,?,?,?,?)");
+            PreparedStatement pst = conexao.con.prepareStatement("insert into turmas(idTurmas, tur_idProf, tur_idCurso, nomeTurmas, dataInicio, dataFinal, cargaHora)values(?,?,?,?,?,?,?)");
             pst.setInt(1, id);
             pst.setInt(2, idProf);
             pst.setInt(3, idCurso);
@@ -62,7 +59,7 @@ public class TurmasDAO {
          
         try {
            
-            PreparedStatement pst = conexao.con.prepareStatement("update turmas set idProf=?, idCurso=?, nomeTurmas=?, dataInicio=?, dataFinal=?, cargaHora=? where idTurmas=?");
+            PreparedStatement pst = conexao.con.prepareStatement("update turmas set tur_idProf=?, tur_idCurso=?, nomeTurmas=?, dataInicio=?, dataFinal=?, cargaHora=? where idTurmas=?");
             
             pst.setInt(1, idProf);
             pst.setInt(2, idCurso);
@@ -72,7 +69,7 @@ public class TurmasDAO {
             pst.setInt(6, turmas.getCargahora());
             pst.setInt(7, turmas.getIdturmas());
             pst.execute();
-            JOptionPane.showMessageDialog(null,"Turmas alterados com sucesso");
+            JOptionPane.showMessageDialog(null,"Turmas alteradas com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro ao salvar alteração de Turmas "+ex);
         }
@@ -86,8 +83,8 @@ public class TurmasDAO {
             conexao.executaSql("select * from turmas where nomeTurmas like'%"+modturma.getPesquisar()+"%'");
             conexao.result.first();
             modturma.setIdturmas(conexao.result.getInt("idTurmas"));
-            buscarNomeProf(conexao.result.getInt("idProf"));
-            buscarNomeCurso(conexao.result.getInt("idCurso"));
+            buscarNomeProf(conexao.result.getInt("tur_idProf"));
+            buscarNomeCurso(conexao.result.getInt("tur_idCurso"));
             modturma.setNometurma(conexao.result.getString("nomeTurmas"));
             modturma.setDatainicio(conexao.result.getDate("dataInicio"));
             modturma.setDatafinal(conexao.result.getDate("dataFinal"));
