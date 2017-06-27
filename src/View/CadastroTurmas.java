@@ -32,7 +32,6 @@ public class CadastroTurmas extends javax.swing.JFrame {
         initComponents();
         preencherProf();
         preencherCurso();
-        this.setTitle("CADASTRAR TURMAS");
         this.setResizable(false);
         preencherTabela("select a.nomeTurmas, a.dataInicio, a.dataFinal, a.cargaHora, b.nomeProf, c.nomeCurso\n" +
                         "from turmas a \n" +
@@ -572,6 +571,9 @@ public void preencherCurso(){
     {
        jbSalvar.setEnabled(true);
        jbCancelar.setEnabled(true);
+       jbEditar.setEnabled(false);
+       jbExcluir.setEnabled(false);
+       
     }
     
        public void botaoSalvarflag1()
@@ -622,6 +624,8 @@ public void preencherCurso(){
       jbCancelar.setEnabled(true);
       jbEditar.setEnabled(true);
       jbExcluir.setEnabled(true);
+      jbNovo.setEnabled(false);
+      
     }
     /**
      * @param args the command line arguments
