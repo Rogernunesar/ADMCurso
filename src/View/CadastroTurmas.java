@@ -9,6 +9,7 @@ import Dao.ConexaoBD;
 import Dao.TurmasDAO;
 import Modelo.ModeloTabela;
 import Modelo.ModeloTurmas;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -23,7 +24,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
            ConexaoBD conexao = new ConexaoBD();
            ModeloTurmas modturma = new ModeloTurmas();
            TurmasDAO turmadao = new TurmasDAO();
-                   
+                
            int flag = 0;
     /**
      * Creates new form CadastroTurmas
@@ -431,15 +432,14 @@ public void preencherCurso(){
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-       
-        /*if(jDateChooserinicio.getDate().toString().isEmpty()){//nao deixar o campos em branco
+           
+        if(jDateChooserinicio.getDate()== null){//nao deixar o campos em branco
             JOptionPane.showMessageDialog(null, "Preencha o campo DATA DE INICIO para continuar!");
             jDateChooserinicio.requestFocus();
-        }else if(jDateChooserfim.getDate().toString().isEmpty()){
+        }else if(jDateChooserfim.getDate()== null){
                 JOptionPane.showMessageDialog(null, "Preencha o campo DATA FINAL para continuar!!");
                 jDateChooserfim.requestFocus();
-        }else */
-       if(jTextFieldCargaHora.getText().isEmpty()){
+        }else if(jTextFieldCargaHora.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Preencha o campo CARGA HORARIA para continuar!!");
                  jTextFieldCargaHora.requestFocus();    
         }else if(jTextFieldNomeTurma.getText().isEmpty()){
