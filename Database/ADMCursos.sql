@@ -53,18 +53,24 @@ REFERENCES PROFESSORES (idProf)
  nascAluno    DATE,
  CONSTRAINT PK_IDALUNO PRIMARY KEY (idAluno));
 
- CREATE TABLE MATRICULAS(
- idMatriculas     INT NOT NULL ,
- idTurmas         INT NOT NULL,
- idAluno          INT NOT NULL,
+CREATE TABLE MATRICULAS(
+ idMatriculas         INT NOT NULL ,
+ mat_idTurmas         INT NOT NULL,
+ mat_idAluno          INT NOT NULL,
+ data_Matricula       DATE,
+ nomeAluno            VARCHAR(40)NULL,
+ nascAluno            VARCHAR (12)NULL,
+ nomeProfessor        VARCHAR (40)NULL,
+ nomeCurso            VARCHAR (40)NULL,
+ inicioCurso          DATE,
  CONSTRAINT Pk_IDMATRICULAS PRIMARY KEY (idMatriculas),
- INDEX MATRICULAS_FKINDEX1(idTurmas),
- INDEX MATRICULAS_FKINDEX2(idAluno),
- FOREIGN KEY (idTurmas)
+ INDEX MATRICULAS_FKINDEX1(mat_idTurmas),
+ INDEX MATRICULAS_FKINDEX2(mat_idAluno),
+ FOREIGN KEY (mat_idTurmas)
  REFERENCES TURMAS(idTurmas)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
- FOREIGN KEY (idAluno)
+ FOREIGN KEY (mat_idAluno)
  REFERENCES ALUNOS(idAluno)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
