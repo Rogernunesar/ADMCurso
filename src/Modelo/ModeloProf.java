@@ -18,7 +18,9 @@ public class ModeloProf {
     private String pesquisar;
 
     public int getIdprofessor() {
+        
         return idprof;
+        
     }
 
     public void setIdprofessor(int idprofessor) {

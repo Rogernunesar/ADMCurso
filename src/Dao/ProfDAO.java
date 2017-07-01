@@ -38,7 +38,7 @@ public class ProfDAO {
              
              JOptionPane.showMessageDialog(null, "Dados inseridos com Sucesso! ");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir dados"+ex);
+            JOptionPane.showMessageDialog(null, "Erro ao inserir dados!"+ex);
         }
         
         conect.desconecta();
