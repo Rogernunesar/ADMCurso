@@ -16,7 +16,7 @@ import javax.swing.ListSelectionModel;
 
 /**
  *
- * @author Rogerio
+ * @Matheus
  */
 public class CadastroProf extends javax.swing.JFrame {
      ConexaoBD conexao = new ConexaoBD();
@@ -26,7 +26,7 @@ public class CadastroProf extends javax.swing.JFrame {
     
     
     public CadastroProf() {
-        this.setTitle(" CADASTRO DE PROFESSOR");
+        this.setTitle(" CADASTRO DE PROFESSOR ");
         this.setResizable(false);
         initComponents();
         preencherTabela("select * from professores order by nomeProf");

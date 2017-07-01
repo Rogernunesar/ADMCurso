@@ -7,7 +7,7 @@ package Modelo;
 
 /**
  *
- * @author Rogerio
+ * @Matheus
  */
 public class ModeloProf {
     private int idprof;

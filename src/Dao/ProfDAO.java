@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Rogerio
+ * @Matheus
  */
 public class ProfDAO {
     ConexaoBD conect = new ConexaoBD();
@@ -36,7 +36,7 @@ public class ProfDAO {
              psm.setString(5, mod.getFormacao());
              psm.execute();
              
-             JOptionPane.showMessageDialog(null, "Dados inseridos com Sucesso");
+             JOptionPane.showMessageDialog(null, "Dados inseridos com Sucesso! ");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir dados"+ex);
         }
