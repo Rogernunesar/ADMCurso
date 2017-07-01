@@ -19,7 +19,7 @@ import javax.swing.ListSelectionModel;
 
 
 /**
- * @author Rogerio
+ * @author Raphael
  */
 public class CadastroAluno extends javax.swing.JFrame {
      ModeloAluno mod = new ModeloAluno();

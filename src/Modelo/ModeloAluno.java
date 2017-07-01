@@ -4,7 +4,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Rogerio
+ * @author Raphael
  */
 public class ModeloAluno {
     
