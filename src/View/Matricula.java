@@ -5,10 +5,10 @@
  */
 package View;
 
-import Dao.ConexaoBD;
-import Dao.MatriculaDAO;
-import Modelo.ModeloMatricula;
-import Modelo.ModeloTabela;
+import ControlDao.ConexaoBD;
+import ControlDao.MatriculaDAO;
+import Model.ModeloMatricula;
+import Model.ModeloTabela;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -24,6 +24,7 @@ public class Matricula extends javax.swing.JFrame {
        ConexaoBD conexao = new ConexaoBD();
        ModeloMatricula modmat = new ModeloMatricula();
        MatriculaDAO matdao = new MatriculaDAO();
+       SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" ); 
        int flag =0;
     /**
      * Creates new form Matricula
@@ -31,7 +32,12 @@ public class Matricula extends javax.swing.JFrame {
     public Matricula() {
         initComponents();
        editarDataMatricua();
-        
+       preencherTabela("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
+                       "from matriculas a \n" +
+                       "Inner join turmas b Inner join alunos c\n" +
+                       "on a.mat_idTurmas = b.idTurmas\n" +
+                       "and a.mat_idAluno= c.idAluno\n" +
+                       "order by c.nomeAluno;");
        
     }
 
@@ -52,29 +58,28 @@ public class Matricula extends javax.swing.JFrame {
         jLabelTitulo = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableMatriculados = new javax.swing.JTable();
-        jTextFieldInicioCurso = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jTextFieldNomeAluno = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldNasc = new javax.swing.JTextField();
         jbBuscarAluno = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldDataMatricula = new javax.swing.JTextField();
         jTextFieldNumMatricula = new javax.swing.JTextField();
         jTextFieldNomeTurma = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldCurso = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jbBuscarTurma = new javax.swing.JButton();
-        jTextFieldIdTurmas = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextFieldProfessor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jTextFieldInicioCurso = new javax.swing.JTextField();
         jbSalvar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jTextFieldPesquisar = new javax.swing.JTextField();
+        jbPesquisar = new javax.swing.JButton();
+        jTextFieldDataMatricula = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,7 +128,6 @@ public class Matricula extends javax.swing.JFrame {
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("FORMULARIO DE MATRÍCULA");
 
-        JTableMatriculados.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Matriculados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
         JTableMatriculados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -142,12 +146,6 @@ public class Matricula extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableMatriculados);
 
-        jTextFieldInicioCurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldInicioCursoActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel10.setText("Nome Aluno");
@@ -160,8 +158,6 @@ public class Matricula extends javax.swing.JFrame {
                 jbBuscarAlunoActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("Data Matricula");
 
         jTextFieldNumMatricula.setEnabled(false);
 
@@ -176,12 +172,17 @@ public class Matricula extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldIdTurmas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTextFieldIdTurmas.setEnabled(false);
-
         jLabel7.setText("Turma:");
 
         jLabel4.setText("Nº  Matricula");
+
+        jLabel12.setText("Inicio do Curso");
+
+        jTextFieldInicioCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldInicioCursoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -199,7 +200,7 @@ public class Matricula extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldCurso))
+                        .addComponent(jTextFieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel10)
@@ -211,23 +212,22 @@ public class Matricula extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addGap(10, 10, 10)
                         .addComponent(jTextFieldNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldInicioCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldNumMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 8, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldProfessor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldNumMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 2, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldProfessor)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -240,14 +240,13 @@ public class Matricula extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jTextFieldNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbBuscarAluno)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNumMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel12)
+                    .addComponent(jTextFieldInicioCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextFieldIdTurmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextFieldProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
                         .addComponent(jTextFieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,8 +257,6 @@ public class Matricula extends javax.swing.JFrame {
                         .addComponent(jbBuscarTurma))))
         );
 
-        jLabel12.setText("Inicio do Curso");
-
         jbSalvar.setText("Matricular Aluno");
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,14 +264,21 @@ public class Matricula extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Pesquisar Matricula");
+        jbPesquisar.setText("Pesquisar Matricula");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Data Matricula");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 42, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,26 +293,26 @@ public class Matricula extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39))))
             .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldInicioCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,12 +324,12 @@ public class Matricula extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel12)
-                        .addComponent(jTextFieldInicioCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jTextFieldPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbPesquisar))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -423,11 +427,11 @@ public class Matricula extends javax.swing.JFrame {
 
                 modmat.setNomealuno((String)jTextFieldNomeAluno.getText());
                 modmat.setNomeTurma((String)jTextFieldNomeTurma.getText());
-                modmat.setDatamatricula(Date.valueOf(jTextFieldDataMatricula.getText()));
-                modmat.setNascaluno(Date.valueOf(jTextFieldNasc.getText()));
+                modmat.setDatamatricula(jTextFieldDataMatricula.getText());
+                modmat.setNascaluno(jTextFieldNasc.getText());
                 modmat.setNomeprofessor((String)jTextFieldProfessor.getText());
                 modmat.setNomecurso((String)jTextFieldCurso.getText());
-                modmat.setDatainicio(Date.valueOf(jTextFieldInicioCurso.getText()));
+                modmat.setDatainicio(jTextFieldInicioCurso.getText());
                 matdao.Salvar(modmat);
 
                 jTextFieldNumMatricula.setText("");
@@ -439,10 +443,6 @@ public class Matricula extends javax.swing.JFrame {
                 jTextFieldCurso.setText("");
                 jTextFieldInicioCurso.setText("");
     }//GEN-LAST:event_jbSalvarActionPerformed
-
-    private void JTableMatriculadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMatriculadosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTableMatriculadosMouseClicked
 
     private void jbBuscarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarAlunoActionPerformed
         flag=1;
@@ -460,6 +460,44 @@ public class Matricula extends javax.swing.JFrame {
     private void jTextFieldInicioCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInicioCursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldInicioCursoActionPerformed
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+       jTextFieldDataMatricula.setText("");
+       
+       jbEditar.setEnabled(true);
+    }//GEN-LAST:event_jbPesquisarActionPerformed
+
+    private void JTableMatriculadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMatriculadosMouseClicked
+       /* String idMatricula=(""+JTableMatriculados.getValueAt(JTableMatriculados.getSelectedRow(), 0)) ;
+        conexao.conexao();
+        conexao.executaSql("select * from turmas where nomeCurso= '"+idMatricula+"'");
+
+        try {
+            conexao.result.first();
+
+            jTextFieldNumMatricula.setText(String.valueOf(conexao.result.getInt("idMatriculas")));
+            ConexaoBD conexPesqturma = new ConexaoBD();
+            conexPesqturma.conexao();
+            conexPesqturma.executaSql("select * from turmas where idTurmas = "+conexao.result.getInt("mat_idTurmas"));
+            conexPesqturma.result.first();
+            jTextFieldNomeTurma.setText(conexPesqturma.result.getString("nomeAluno"));
+            conexPesqturma.desconecta();
+            ConexaoBD conexPesqaluno = new ConexaoBD();
+            conexPesqaluno.conexao();
+            conexPesqaluno.executaSql("select * from alunos where idAluno = "+conexao.result.getInt("mat_idAluno"));
+            conexPesqaluno.result.first();
+            jTextFieldNomeAluno.setText(conexPesqaluno.result.getString("nomeAluno"));
+            conexPesqaluno.desconecta();
+            jTextFieldDataMatricula.setText(conexao.result.getString("data_Matricula"));
+            jTextFieldNasc.setText(conexao.result.getString("nascAluno"));
+            jTextFieldProfessor.setText(conexao.result.getString("nomeProfessor"));
+            jTextFieldCurso.setText(conexao.result.getString("nomeCurso"));
+            jTextFieldInicioCurso.setText(format.format(conexao.result.getDate("inicioCurso")));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Erro ao selecionar dados   "+ex);
+        }
+        conexao.desconecta();*/
+    }//GEN-LAST:event_JTableMatriculadosMouseClicked
     public void preencherTabelaAluno(String sql){
              ArrayList dados = new ArrayList();
         String [] colunas = new String[]{"Codigo", "Nome", "Nasc Aluno"};
@@ -514,6 +552,45 @@ public class Matricula extends javax.swing.JFrame {
          JTableBuscar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
          conexao.desconecta();  
     }
+     public void preencherTabela(String sql){
+        ArrayList dados = new ArrayList();
+        String [] colunas = new String[]{"Matricula", "Aluno", "Turma", "Data Matricula", "Nascimento", "Professor", "Curso", "Inicio"};
+        conexao.conexao();
+        conexao.executaSql(sql);
+        
+         try {
+             conexao.result.first();
+             do{
+                dados.add(new Object[]{conexao.result.getInt("idMatriculas"),conexao.result.getString("nomeAluno"),conexao.result.getString("nomeTurmas"),conexao.result.getString("data_Matricula"), conexao.result.getString("nascAluno"), conexao.result.getString("nomeProfessor") ,conexao.result.getString("nomeCurso"),conexao.result.getString("inicioCurso")});  
+             }while(conexao.result.next());
+         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane,"Digite outro nome"+ex);
+         }
+         ModeloTabela modelo = new ModeloTabela(dados, colunas);
+         
+         JTableMatriculados.setModel(modelo);
+         JTableMatriculados.getColumnModel().getColumn(0).setPreferredWidth(60);
+         JTableMatriculados.getColumnModel().getColumn(0).setResizable(false);
+         JTableMatriculados.getColumnModel().getColumn(1).setPreferredWidth(200);
+         JTableMatriculados.getColumnModel().getColumn(1).setResizable(false);
+         JTableMatriculados.getColumnModel().getColumn(2).setPreferredWidth(100);
+         JTableMatriculados.getColumnModel().getColumn(2).setResizable(false);
+         JTableMatriculados.getColumnModel().getColumn(3).setPreferredWidth(95);
+         JTableMatriculados.getColumnModel().getColumn(3).setResizable(false);
+         JTableMatriculados.getColumnModel().getColumn(4).setPreferredWidth(95);
+         JTableMatriculados.getColumnModel().getColumn(4).setResizable(false);
+         JTableMatriculados.getColumnModel().getColumn(5).setPreferredWidth(180);
+         JTableMatriculados.getColumnModel().getColumn(5).setResizable(false);
+         JTableMatriculados.getColumnModel().getColumn(6).setPreferredWidth(150);
+         JTableMatriculados.getColumnModel().getColumn(6).setResizable(false);
+         JTableMatriculados.getColumnModel().getColumn(7).setPreferredWidth(80);
+         JTableMatriculados.getColumnModel().getColumn(7).setResizable(false);
+         JTableMatriculados.getTableHeader().setReorderingAllowed(false);
+         JTableMatriculados.setAutoResizeMode(JTableMatriculados.AUTO_RESIZE_OFF);
+         JTableMatriculados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+         conexao.desconecta();   
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -552,7 +629,6 @@ public class Matricula extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JTableBuscar;
     private javax.swing.JTable JTableMatriculados;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -565,21 +641,21 @@ public class Matricula extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldCurso;
     private javax.swing.JTextField jTextFieldDataMatricula;
-    private javax.swing.JTextField jTextFieldIdTurmas;
     private javax.swing.JTextField jTextFieldInicioCurso;
     private javax.swing.JTextField jTextFieldNasc;
     private javax.swing.JTextField jTextFieldNomeAluno;
     private javax.swing.JTextField jTextFieldNomeTurma;
     private javax.swing.JTextField jTextFieldNumMatricula;
+    private javax.swing.JTextField jTextFieldPesquisar;
     private javax.swing.JTextField jTextFieldProfessor;
     private javax.swing.JButton jbBuscarAluno;
     private javax.swing.JButton jbBuscarTurma;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbExcluir;
+    private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvar;
     // End of variables declaration//GEN-END:variables
 }
