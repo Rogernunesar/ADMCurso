@@ -5,11 +5,11 @@
  */
 package View;
 
-import Dao.ConexaoBD;
-import Dao.TurmasDAO;
-import Modelo.ModeloTabela;
-import Modelo.ModeloTurmas;
-import java.sql.Date;
+
+import ControlDao.ConexaoBD;
+import ControlDao.TurmasDAO;
+import Model.ModeloTabela;
+import Model.ModeloTurmas;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -24,7 +24,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
            ConexaoBD conexao = new ConexaoBD();
            ModeloTurmas modturma = new ModeloTurmas();
            TurmasDAO turmadao = new TurmasDAO();
-                
+                   
            int flag = 0;
     /**
      * Creates new form CadastroTurmas
@@ -33,6 +33,7 @@ public class CadastroTurmas extends javax.swing.JFrame {
         initComponents();
         preencherProf();
         preencherCurso();
+        this.setTitle("CADASTRAR TURMAS");
         this.setResizable(false);
         preencherTabela("select a.nomeTurmas, a.dataInicio, a.dataFinal, a.cargaHora, b.nomeProf, c.nomeCurso\n" +
                         "from turmas a \n" +
@@ -357,6 +358,7 @@ public void preencherCurso(){
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
        modturma.setPesquisar(jTextFPesquisa.getText());
        ModeloTurmas turma1 = turmadao.buscarTurmas(modturma);
+       
        jTextFieldIdTurmas.setText(String.valueOf(turma1.getIdturmas()));
        jComboBoxProf.setSelectedItem(turma1.getNomeprof());
        jComboBoxCursos.setSelectedItem(turma1.getNomecurso());
@@ -365,6 +367,9 @@ public void preencherCurso(){
        jDateChooserfim.setDate(turma1.getDatafinal());
        jTextFieldCargaHora.setText(String.valueOf(turma1.getCargahora()));
        jTextFieldNomeTurma.setText(turma1.getNometurma());
+       preencherTabela("select a.nomeTurmas, a.dataInicio, a.dataFinal, a.cargaHora, b.nomeProf, c.nomeCurso from turmas a Inner join professores b Inner join cursos c on a.tur_idProf = b.idProf and a.tur_idCurso= c.idCurso where nomeTurmas like'%"+modturma.getPesquisar()+"%'");
+                       
+       
        jbEditar.setEnabled(true);
        botaoPesquisar();
        
@@ -432,14 +437,15 @@ public void preencherCurso(){
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-           
-        if(jDateChooserinicio.getDate()== null){//nao deixar o campos em branco
+       
+        /*if(jDateChooserinicio.getDate().toString().isEmpty()){//nao deixar o campos em branco
             JOptionPane.showMessageDialog(null, "Preencha o campo DATA DE INICIO para continuar!");
             jDateChooserinicio.requestFocus();
-        }else if(jDateChooserfim.getDate()== null){
+        }else if(jDateChooserfim.getDate().toString().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Preencha o campo DATA FINAL para continuar!!");
                 jDateChooserfim.requestFocus();
-        }else if(jTextFieldCargaHora.getText().isEmpty()){
+        }else */
+       if(jTextFieldCargaHora.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Preencha o campo CARGA HORARIA para continuar!!");
                  jTextFieldCargaHora.requestFocus();    
         }else if(jTextFieldNomeTurma.getText().isEmpty()){
@@ -571,9 +577,6 @@ public void preencherCurso(){
     {
        jbSalvar.setEnabled(true);
        jbCancelar.setEnabled(true);
-       jbEditar.setEnabled(false);
-       jbExcluir.setEnabled(false);
-       
     }
     
        public void botaoSalvarflag1()
@@ -624,8 +627,6 @@ public void preencherCurso(){
       jbCancelar.setEnabled(true);
       jbEditar.setEnabled(true);
       jbExcluir.setEnabled(true);
-      jbNovo.setEnabled(false);
-      
     }
     /**
      * @param args the command line arguments
