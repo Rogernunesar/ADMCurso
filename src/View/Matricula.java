@@ -50,7 +50,6 @@ public class Matricula extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jbEditar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableBuscar = new javax.swing.JTable();
@@ -82,13 +81,6 @@ public class Matricula extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jbEditar.setText("Editar Matricula");
-        jbEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEditarActionPerformed(evt);
-            }
-        });
 
         jbExcluir.setText("Excluir Matricula");
         jbExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -282,13 +274,11 @@ public class Matricula extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addGap(163, 163, 163)
                         .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(141, 141, 141)
                         .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(217, 217, 217))
+                        .addGap(142, 142, 142))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39))))
@@ -336,7 +326,6 @@ public class Matricula extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCancelar)
                     .addComponent(jbExcluir)
-                    .addComponent(jbEditar)
                     .addComponent(jbSalvar))
                 .addContainerGap())
         );
@@ -350,13 +339,27 @@ public class Matricula extends javax.swing.JFrame {
            jTextFieldDataMatricula.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis())));
      }else{jTextFieldDataMatricula.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis())));}
      }
-    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-             flag=4;
-             editarDataMatricua();
-    }//GEN-LAST:event_jbEditarActionPerformed
-
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
-        
+      int resposta = 0 ;
+         resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja realmente excluir a Matricula");
+         if(resposta== JOptionPane.YES_OPTION)
+             modmat.setIdmatricula(Integer.valueOf(jTextFieldNumMatricula.getText()));
+             matdao.excluirMatriculas(modmat);   
+             
+                jTextFieldNumMatricula.setText("");
+                jTextFieldNomeAluno.setText("");
+                jTextFieldNomeTurma.setText("");
+                jTextFieldDataMatricula.setText("");
+                jTextFieldNasc.setText("");
+                jTextFieldProfessor.setText("");
+                jTextFieldCurso.setText("");
+                jTextFieldInicioCurso.setText("");
+                preencherTabela("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
+                       "from matriculas a \n" +
+                       "Inner join turmas b Inner join alunos c\n" +
+                       "on a.mat_idTurmas = b.idTurmas\n" +
+                       "and a.mat_idAluno= c.idAluno\n" +
+                       "where c.nomeAluno like'%"+jTextFieldPesquisar.getText()+"%'");
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void JTableBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBuscarMouseClicked
@@ -420,7 +423,14 @@ public class Matricula extends javax.swing.JFrame {
     }//GEN-LAST:event_JTableBuscarMouseClicked
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
-  
+                jTextFieldNumMatricula.setText("");
+                jTextFieldNomeAluno.setText("");
+                jTextFieldNomeTurma.setText("");
+                jTextFieldDataMatricula.setText("");
+                jTextFieldNasc.setText("");
+                jTextFieldProfessor.setText("");
+                jTextFieldCurso.setText("");
+                jTextFieldInicioCurso.setText("");
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
@@ -442,6 +452,13 @@ public class Matricula extends javax.swing.JFrame {
                 jTextFieldProfessor.setText("");
                 jTextFieldCurso.setText("");
                 jTextFieldInicioCurso.setText("");
+                
+                       preencherTabela("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
+                       "from matriculas a \n" +
+                       "Inner join turmas b Inner join alunos c\n" +
+                       "on a.mat_idTurmas = b.idTurmas\n" +
+                       "and a.mat_idAluno= c.idAluno\n" +
+                       "where c.nomeAluno like'%"+jTextFieldPesquisar.getText()+"%'");
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbBuscarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarAlunoActionPerformed
@@ -463,40 +480,50 @@ public class Matricula extends javax.swing.JFrame {
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
        jTextFieldDataMatricula.setText("");
-       
-       jbEditar.setEnabled(true);
+       preencherTabela("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
+                       "from matriculas a \n" +
+                       "Inner join turmas b Inner join alunos c\n" +
+                       "on a.mat_idTurmas = b.idTurmas\n" +
+                       "and a.mat_idAluno= c.idAluno\n" +
+                       "where c.nomeAluno like'%"+jTextFieldPesquisar.getText()+"%'");
+      
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void JTableMatriculadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMatriculadosMouseClicked
-       /* String idMatricula=(""+JTableMatriculados.getValueAt(JTableMatriculados.getSelectedRow(), 0)) ;
+        String idMatricula=(""+JTableMatriculados.getValueAt(JTableMatriculados.getSelectedRow(), 0)) ;
         conexao.conexao();
-        conexao.executaSql("select * from turmas where nomeCurso= '"+idMatricula+"'");
+        conexao.executaSql("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
+                       "from matriculas a \n" +
+                       "Inner join turmas b Inner join alunos c\n" +
+                       "on a.mat_idTurmas = b.idTurmas\n" +
+                       "and a.mat_idAluno= c.idAluno\n" +
+                       "where a.idmatriculas = '"+idMatricula+"'");
 
         try {
             conexao.result.first();
 
             jTextFieldNumMatricula.setText(String.valueOf(conexao.result.getInt("idMatriculas")));
+           /* ConexaoBD conexPesqaluno = new ConexaoBD();
+            conexPesqaluno.conexao();
+            conexPesqaluno.executaSql("select * from alunos where idAluno = "+conexao.result.getInt("mat_idAluno"));
+            conexPesqaluno.result.first();
+            jTextFieldNomeAluno.setText(conexPesqaluno.result.getString("nomeAluno"));
+            conexPesqaluno.desconecta();
             ConexaoBD conexPesqturma = new ConexaoBD();
             conexPesqturma.conexao();
             conexPesqturma.executaSql("select * from turmas where idTurmas = "+conexao.result.getInt("mat_idTurmas"));
             conexPesqturma.result.first();
             jTextFieldNomeTurma.setText(conexPesqturma.result.getString("nomeAluno"));
             conexPesqturma.desconecta();
-            ConexaoBD conexPesqaluno = new ConexaoBD();
-            conexPesqaluno.conexao();
-            conexPesqaluno.executaSql("select * from alunos where idAluno = "+conexao.result.getInt("mat_idAluno"));
-            conexPesqaluno.result.first();
-            jTextFieldNomeAluno.setText(conexPesqaluno.result.getString("nomeAluno"));
-            conexPesqaluno.desconecta();
             jTextFieldDataMatricula.setText(conexao.result.getString("data_Matricula"));
             jTextFieldNasc.setText(conexao.result.getString("nascAluno"));
             jTextFieldProfessor.setText(conexao.result.getString("nomeProfessor"));
             jTextFieldCurso.setText(conexao.result.getString("nomeCurso"));
-            jTextFieldInicioCurso.setText(format.format(conexao.result.getDate("inicioCurso")));
+            jTextFieldInicioCurso.setText(format.format(conexao.result.getDate("inicioCurso")));*/
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro ao selecionar dados   "+ex);
         }
-        conexao.desconecta();*/
+        conexao.desconecta();
     }//GEN-LAST:event_JTableMatriculadosMouseClicked
     public void preencherTabelaAluno(String sql){
              ArrayList dados = new ArrayList();
@@ -653,7 +680,6 @@ public class Matricula extends javax.swing.JFrame {
     private javax.swing.JButton jbBuscarAluno;
     private javax.swing.JButton jbBuscarTurma;
     private javax.swing.JButton jbCancelar;
-    private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvar;
