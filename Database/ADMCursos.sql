@@ -7,11 +7,11 @@ USE CURSOSADM;
 
 
 CREATE TABLE CURSOS(
-idCurso       INT NOT NULL,
-nomeCurso     VARCHAR(40),
-requistoBasic VARCHAR(60),
-cargaHoraria  SMALLINT,
-precoCurso    DOUBLE,
+idCurso        INT NOT NULL,
+nomeCurso      VARCHAR(40),
+requistoBasic  VARCHAR(60),
+cargaHoraria   SMALLINT,
+precoCurso     DOUBLE,
 CONSTRAINT PK_IDCURSO  PRIMARY KEY(idCurso)
 ); 
 
