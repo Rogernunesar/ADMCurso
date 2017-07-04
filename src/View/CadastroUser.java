@@ -5,9 +5,9 @@
  */
 package View;
 
-import Dao.ConexaoBD;
-import Dao.UserDAO;
-import Modelo.ModeloUser;
+import ControlDao.ConexaoBD;
+import ControlDao.UserDAO;
+import Model.ModeloUser;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,14 +20,11 @@ public class CadastroUser extends javax.swing.JFrame {
      UserDAO controle = new UserDAO();
      ConexaoBD conexao = new ConexaoBD();
      int flag = 0;
-     
-     
+ 
     public CadastroUser() {
         initComponents();
         this.setResizable(false);
-        this.setTitle("CADASTRO DE USUÁRIO");
-        
-        
+        this.setTitle("CADASTRO DE USUÁRIO");     
     }
 
     /**
@@ -83,7 +80,7 @@ public class CadastroUser extends javax.swing.JFrame {
 
         jLabel4.setText(" Tipo de Usuario:");
 
-        jComboBoxUser.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Secretaria", "Usuario Comum" }));
+        jComboBoxUser.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Secretaria", " " }));
         jComboBoxUser.setEnabled(false);
 
         jLabel5.setText("Confirma Senha :");
@@ -211,7 +208,7 @@ public class CadastroUser extends javax.swing.JFrame {
                     .addComponent(jbSalvar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbNovo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,8 +258,6 @@ public class CadastroUser extends javax.swing.JFrame {
 
     private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
         flag= 1;
-
-        
         jTextFUser.setEnabled(true);
         jPasswordFieldSenha.setEnabled(true);
         jPasswordFieldConfSenha.setEnabled(true);
