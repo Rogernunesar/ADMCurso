@@ -79,10 +79,10 @@ public class Matricula extends javax.swing.JFrame {
         jbPesquisar = new javax.swing.JButton();
         jTextFieldDataMatricula = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jbNovo = new javax.swing.JButton();
 
         jbExcluir.setText("Excluir Matricula");
+        jbExcluir.setEnabled(false);
         jbExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbExcluirActionPerformed(evt);
@@ -108,6 +108,7 @@ public class Matricula extends javax.swing.JFrame {
         jScrollPane1.setViewportView(JTableBuscar);
 
         jbCancelar.setText("Cancelar Matricula");
+        jbCancelar.setEnabled(false);
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCancelarActionPerformed(evt);
@@ -142,9 +143,14 @@ public class Matricula extends javax.swing.JFrame {
 
         jLabel10.setText("Nome Aluno");
 
+        jTextFieldNomeAluno.setEnabled(false);
+
         jLabel11.setText("Data Nasc");
 
+        jTextFieldNasc.setEnabled(false);
+
         jbBuscarAluno.setText("Buscar");
+        jbBuscarAluno.setEnabled(false);
         jbBuscarAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbBuscarAlunoActionPerformed(evt);
@@ -153,11 +159,21 @@ public class Matricula extends javax.swing.JFrame {
 
         jTextFieldNumMatricula.setEnabled(false);
 
+        jTextFieldNomeTurma.setEnabled(false);
+
         jLabel1.setText("Curso:");
+
+        jTextFieldCurso.setEnabled(false);
+        jTextFieldCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCursoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Professor:");
 
         jbBuscarTurma.setText("Buscar");
+        jbBuscarTurma.setEnabled(false);
         jbBuscarTurma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbBuscarTurmaActionPerformed(evt);
@@ -166,10 +182,13 @@ public class Matricula extends javax.swing.JFrame {
 
         jLabel7.setText("Turma:");
 
+        jTextFieldProfessor.setEnabled(false);
+
         jLabel4.setText("Nº  Matricula");
 
         jLabel12.setText("Inicio do Curso");
 
+        jTextFieldInicioCurso.setEnabled(false);
         jTextFieldInicioCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldInicioCursoActionPerformed(evt);
@@ -250,6 +269,7 @@ public class Matricula extends javax.swing.JFrame {
         );
 
         jbSalvar.setText("Matricular Aluno");
+        jbSalvar.setEnabled(false);
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSalvarActionPerformed(evt);
@@ -263,25 +283,21 @@ public class Matricula extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldDataMatricula.setEnabled(false);
+
         jLabel3.setText("Data Matricula");
+
+        jbNovo.setText("Nova Matrícula");
+        jbNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(163, 163, 163)
-                        .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(141, 141, 141)
-                        .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,6 +319,21 @@ public class Matricula extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(246, 246, 246))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,16 +352,18 @@ public class Matricula extends javax.swing.JFrame {
                     .addComponent(jTextFieldPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbPesquisar))
                 .addGap(8, 8, 8)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbNovo)
+                    .addComponent(jbSalvar)
                     .addComponent(jbCancelar)
-                    .addComponent(jbExcluir)
-                    .addComponent(jbSalvar))
-                .addContainerGap())
+                    .addComponent(jbExcluir))
+                .addGap(18, 18, 18))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(1016, 605));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
      public void editarDataMatricua(){
          if(flag == 4){
@@ -431,10 +464,34 @@ public class Matricula extends javax.swing.JFrame {
                 jTextFieldProfessor.setText("");
                 jTextFieldCurso.setText("");
                 jTextFieldInicioCurso.setText("");
+                
+              
+                jTextFieldNomeAluno.setEnabled(!true);
+                jTextFieldNomeTurma.setEnabled(!true);
+                jTextFieldDataMatricula.setEnabled(!true);
+                jTextFieldNasc.setEnabled(!true);
+                jTextFieldProfessor.setEnabled(!true);
+                jTextFieldCurso.setEnabled(!true);
+                jTextFieldInicioCurso.setEnabled(!true);
+                jbBuscarAluno.setEnabled(!true);
+                jbBuscarTurma.setEnabled(!true);
+                jbSalvar.setEnabled(false);
+                jbNovo.setEnabled(true);
+                jbCancelar.setEnabled(false);
+                jbExcluir.setEnabled(false);         
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-
+                 if(jTextFieldNomeAluno.getText().isEmpty()){//nao deixar o campos em branco
+                    JOptionPane.showMessageDialog(null, "Preencha o campo USUARIO para continuar!");
+                    jTextFieldNomeAluno.requestFocus();
+                 }else if(jTextFieldNomeTurma.getText().isEmpty()){
+                         JOptionPane.showMessageDialog(null, "Preencha o campo TURMA para continuar!");
+                         jTextFieldNomeTurma.requestFocus();
+                 }else if(jTextFieldDataMatricula.getText().isEmpty()){
+                         JOptionPane.showMessageDialog(null, "Preencha o campo DATA DA MATRICULA! ");
+                         jTextFieldDataMatricula.requestFocus();
+                 }else{
                 modmat.setNomealuno((String)jTextFieldNomeAluno.getText());
                 modmat.setNomeTurma((String)jTextFieldNomeTurma.getText());
                 modmat.setDatamatricula(jTextFieldDataMatricula.getText());
@@ -443,6 +500,7 @@ public class Matricula extends javax.swing.JFrame {
                 modmat.setNomecurso((String)jTextFieldCurso.getText());
                 modmat.setDatainicio(jTextFieldInicioCurso.getText());
                 matdao.Salvar(modmat);
+                
 
                 jTextFieldNumMatricula.setText("");
                 jTextFieldNomeAluno.setText("");
@@ -453,12 +511,27 @@ public class Matricula extends javax.swing.JFrame {
                 jTextFieldCurso.setText("");
                 jTextFieldInicioCurso.setText("");
                 
+                jTextFieldNomeAluno.setEnabled(!true);
+                jTextFieldNomeTurma.setEnabled(!true);
+                jTextFieldDataMatricula.setEnabled(!true);
+                jTextFieldNasc.setEnabled(!true);
+                jTextFieldProfessor.setEnabled(!true);
+                jTextFieldCurso.setEnabled(!true);
+                jTextFieldInicioCurso.setEnabled(!true);
+                jbBuscarAluno.setEnabled(!true);
+                jbBuscarTurma.setEnabled(!true);
+                jbSalvar.setEnabled(false);
+                jbNovo.setEnabled(true);
+                jbCancelar.setEnabled(false);
+                jbExcluir.setEnabled(false);
                        preencherTabela("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
                        "from matriculas a \n" +
                        "Inner join turmas b Inner join alunos c\n" +
                        "on a.mat_idTurmas = b.idTurmas\n" +
                        "and a.mat_idAluno= c.idAluno\n" +
                        "where c.nomeAluno like'%"+jTextFieldPesquisar.getText()+"%'");
+                       
+                 }
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbBuscarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarAlunoActionPerformed
@@ -480,6 +553,7 @@ public class Matricula extends javax.swing.JFrame {
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
        jTextFieldDataMatricula.setText("");
+       jbExcluir.setEnabled(false);
        preencherTabela("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
                        "from matriculas a \n" +
                        "Inner join turmas b Inner join alunos c\n" +
@@ -490,6 +564,8 @@ public class Matricula extends javax.swing.JFrame {
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void JTableMatriculadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMatriculadosMouseClicked
+        jbExcluir.setEnabled(true);
+        jbCancelar.setEnabled(true);
         String idMatricula=(""+JTableMatriculados.getValueAt(JTableMatriculados.getSelectedRow(), 0)) ;
         conexao.conexao();
         conexao.executaSql("select a.idMatriculas, c.nomeAluno, b.nomeTurmas, a.data_Matricula, a.nascAluno, a.nomeProfessor, a.nomeCurso, a.inicioCurso\n" +
@@ -503,6 +579,7 @@ public class Matricula extends javax.swing.JFrame {
             conexao.result.first();
 
             jTextFieldNumMatricula.setText(String.valueOf(conexao.result.getInt("idMatriculas")));
+           //jTextFieldCurso.setText(conexao.result.getString("nomeCurso"));
            /* ConexaoBD conexPesqaluno = new ConexaoBD();
             conexPesqaluno.conexao();
             conexPesqaluno.executaSql("select * from alunos where idAluno = "+conexao.result.getInt("mat_idAluno"));
@@ -525,6 +602,29 @@ public class Matricula extends javax.swing.JFrame {
         }
         conexao.desconecta();
     }//GEN-LAST:event_JTableMatriculadosMouseClicked
+
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+                  
+        
+                jTextFieldNomeAluno.setEnabled(true);
+                jTextFieldNomeTurma.setEnabled(true);
+                jTextFieldDataMatricula.setEnabled(true);
+                jTextFieldNasc.setEnabled(true);
+                jTextFieldProfessor.setEnabled(true);
+                jTextFieldCurso.setEnabled(true);
+                jTextFieldInicioCurso.setEnabled(true);
+                jbBuscarAluno.setEnabled(true);
+                jbBuscarTurma.setEnabled(true);
+                jbSalvar.setEnabled(true);
+                jbExcluir.setEnabled(true);
+                jbCancelar.setEnabled(true);
+                jbNovo.setEnabled(false);
+                
+    }//GEN-LAST:event_jbNovoActionPerformed
+
+    private void jTextFieldCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCursoActionPerformed
     public void preencherTabelaAluno(String sql){
              ArrayList dados = new ArrayList();
         String [] colunas = new String[]{"Codigo", "Nome", "Nasc Aluno"};
@@ -681,6 +781,7 @@ public class Matricula extends javax.swing.JFrame {
     private javax.swing.JButton jbBuscarTurma;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbExcluir;
+    private javax.swing.JButton jbNovo;
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvar;
     // End of variables declaration//GEN-END:variables
