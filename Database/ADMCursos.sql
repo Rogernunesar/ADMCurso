@@ -4,8 +4,6 @@ mysql -h localhost -u root
 CREATE DATABASE CURSOSADM;
 USE CURSOSADM;
 
-
-
 CREATE TABLE CURSOS(
 idCurso        INT NOT NULL,
 nomeCurso      VARCHAR(40),
@@ -24,14 +22,13 @@ formacao      VARCHAR (40),
 CONSTRAINT PK_IDPROF PRIMARY KEY (idProf)
 );
 
-
 CREATE TABLE TURMAS(
-idTurmas     INT NOT NULL,
-tur_idProf       INT NOT NULL,
-tur_idCurso      INT NOT NULL,
-dataInicio   DATE NULL,
-dataFinal    DATE NULL,
-cargaHora   SMALLINT,
+idTurmas      INT NOT NULL,
+tur_idProf    INT NOT NULL,
+tur_idCurso   INT NOT NULL,
+dataInicio    DATE NULL,
+dataFinal     DATE NULL,
+cargaHora     SMALLINT,
 CONSTRAINT PK_IDTURMAS PRIMARY KEY (idTurmas),
 INDEX TURMAS_FKINDEX1(idCurso),
 INDEX TURMAS_FKINDEX2(idProf),
@@ -58,7 +55,6 @@ CREATE TABLE MATRICULAS(
  mat_idTurmas         INT NOT NULL,
  mat_idAluno          INT NOT NULL,
  data_Matricula       DATE,
- nomeAluno            VARCHAR(40)NULL,
  nascAluno            VARCHAR (12)NULL,
  nomeProfessor        VARCHAR (40)NULL,
  nomeCurso            VARCHAR (40)NULL,
