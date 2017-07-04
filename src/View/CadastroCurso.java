@@ -5,10 +5,10 @@
  */
 package View;
 
-import Dao.ConexaoBD;
-import Dao.CursoDAO;
-import Modelo.ModeloCursos;
-import Modelo.ModeloTabela;
+import ControlDao.ConexaoBD;
+import ControlDao.CursoDAO;
+import Model.ModeloCursos;
+import Model.ModeloTabela;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -316,7 +316,6 @@ public class CadastroCurso extends javax.swing.JFrame {
     }//GEN-LAST:event_JTableCursosMouseClicked
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
-
         jTextFNomeCurso.setEnabled(!true);
         jTextFReqBasico.setEnabled(!true);
         jTextFPreco.setEnabled(!true);
