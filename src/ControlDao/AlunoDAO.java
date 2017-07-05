@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
+package ControlDao;
 
-import Modelo.ModeloAluno;
+import Model.ModeloAluno;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Raphael
+ * @author Rogerio
  */
 public class AlunoDAO {
     
@@ -33,13 +33,13 @@ public class AlunoDAO {
             pst.setString(2, mod.getNomealuno());
             pst.setString(3, mod.getEmailaluno());
             pst.setString(4, mod.getFonealuno());
-            pst.setDate(5, (mod.getNascaluno()));
+            pst.setString(5, mod.getNascaluno());
             pst.execute();
             
             JOptionPane.showMessageDialog(null, "Dados Inseridos com Sucesso!");
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir dados! /nErro"+ex);
+            JOptionPane.showMessageDialog(null, "Erro ao inserir dados!    /nErro"+ex);
         }
         
         conect.desconecta();
@@ -57,7 +57,7 @@ public class AlunoDAO {
             mod.setNomealuno(conect.result.getString("nomeAluno"));
             mod.setEmailaluno(conect.result.getString("emailAluno"));
             mod.setFonealuno(conect.result.getString("foneAluno"));
-            mod.setNascaluno(conect.result.getDate("nascAluno"));
+            mod.setNascaluno(conect.result.getString("nascAluno"));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Aluno não encontrado");
         }
@@ -78,7 +78,7 @@ public class AlunoDAO {
             JOptionPane.showMessageDialog(null, "Dados excluidos com sucesso");
         }
         catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir dados /nErro"+ex);
+            JOptionPane.showMessageDialog(null,"Erro ao excluir dados. \n Nome utilizado em outra Tabela");
         }
         conect.desconecta();
     }
@@ -93,7 +93,7 @@ public class AlunoDAO {
             pst.setString(1, mod.getNomealuno());
             pst.setString(2, mod.getEmailaluno());
             pst.setString(3, mod.getFonealuno());
-            pst.setDate(4, mod.getNascaluno());
+            pst.setString(4, mod.getNascaluno());
             pst.setInt(5, mod.getIdaluno());
             pst.execute();
             JOptionPane.showMessageDialog(null, "Dados alterados com sucesso");

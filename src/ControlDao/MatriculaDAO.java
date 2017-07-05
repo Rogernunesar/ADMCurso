@@ -55,17 +55,28 @@ public class MatriculaDAO {
     
     //buscar idAluno --------------------------------------------------------------------
     public void buscaIdTurmas(String nomeTurmas){
-       conexao.conexao();
-       conexao.executaSql("select * from turmas where nomeTurmas='"+nomeTurmas+"'");
+       conexaoturma.conexao();
+       conexaoturma.executaSql("select * from turmas where nomeTurmas='"+nomeTurmas+"'");
         try {
-            conexao.result.first();
-            idTurmas = conexao.result.getInt("idTurmas");
+            conexaoturma.result.first();
+            idTurmas = conexaoturma.result.getInt("idTurmas");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro ao buscar o idturmas"+ex);
         }
-       conexao.desconecta();
+     
     } 
-    
+    //buscar idTurmas que return de um inteiro --------------------------------------------------------------------
+    public int buscaIdrelatTurmas(String nomeTurmas){
+       conexaoturma.conexao();
+       conexaoturma.executaSql("select * from turmas where nomeTurmas='"+nomeTurmas+"'");
+        try {
+            conexaoturma.result.first();
+            idTurmas = conexaoturma.result.getInt("idTurmas");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Erro ao buscar o idturmas"+ex);
+        }
+        return idTurmas;
+    } 
     //buscar idTurmas --------------------------------------------------------------------
     public void buscaIdAluno(String nomeAluno){
        conexao.conexao();
@@ -78,6 +89,7 @@ public class MatriculaDAO {
         }
        conexao.desconecta();
     } 
+    //
    
     public void editarMatricula(ModeloMatricula matricula){
          buscaIdAluno(matricula.getNomealuno());
@@ -153,5 +165,18 @@ public class MatriculaDAO {
         }
         conexao.desconecta();
         return modMatricula;
+    }
+     public void excluirMatriculas (ModeloMatricula modmat){
+        conexao.conexao();
+        
+        try {
+            PreparedStatement ptm = conexao.con.prepareStatement("delete from matriculas where idMatriculas=?");
+            
+            ptm.setInt(1, modmat.getIdmatricula());
+            ptm.execute();
+            JOptionPane.showMessageDialog(null, "Registro excluido com Sucesso");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Registro excluido com Sucesso"+ex);
+        }
     }
 }

@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
+package ControlDao;
 
-import Modelo.ModeloProf;
+import Model.ModeloProf;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @Matheus
+ * @author Rogerio
  */
 public class ProfDAO {
     ConexaoBD conect = new ConexaoBD();
@@ -36,9 +36,9 @@ public class ProfDAO {
              psm.setString(5, mod.getFormacao());
              psm.execute();
              
-             JOptionPane.showMessageDialog(null, "Dados inseridos com Sucesso! ");
+             JOptionPane.showMessageDialog(null, "Dados inseridos com Sucesso");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir dados!"+ex);
+            JOptionPane.showMessageDialog(null, "Erro ao inserir dados"+ex);
         }
         
         conect.desconecta();

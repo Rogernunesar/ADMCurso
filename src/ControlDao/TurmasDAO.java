@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
+package ControlDao;
 
-import Modelo.ModeloTurmas;
+import Model.ModeloTurmas;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -19,9 +19,12 @@ public class TurmasDAO {
     ConexaoBD  conexao = new ConexaoBD();
     ConexaoBD conexaoprof = new ConexaoBD();
     ConexaoBD conexaocurso = new ConexaoBD();
+    ConexaoBD conexaocargcurso = new ConexaoBD();
     
     String nomProf;
     String nomeCurso;
+  
+    
     int idProf;
     int idCurso;
     
@@ -98,6 +101,7 @@ public class TurmasDAO {
         conexao.desconecta();
         return modturma;
     }
+     //----------------------buscar o id do professor-----------------------------------------------------------------------
     public void buscarIdProf(String noProf){
        conexao.conexao();
        conexao.executaSql("select *from professores where nomeProf='"+noProf+"'");
@@ -109,7 +113,7 @@ public class TurmasDAO {
         }
         conexao.desconecta();
     }
-    
+    //--------------------------bruscar o nome do Professor ---------------------------------------------------------------------
     public void buscarNomeProf(int codProf){
         conexaoprof.conexao();
        
@@ -122,7 +126,7 @@ public class TurmasDAO {
         }
         conexaoprof.desconecta();
     }
-    
+    //buscar idCurso --------------------------------------------------------------------
     public void buscaIdCursos(String nomeCurso){
         conexao.conexao();
        conexao.executaSql("select * from cursos where nomeCurso='"+nomeCurso+"'");
@@ -134,7 +138,8 @@ public class TurmasDAO {
         }
        conexao.desconecta();
     } 
-    
+ 
+     // -----------------------------------------------------------------------------------
     public void buscarNomeCurso(int codCurso){
         conexaocurso.conexao();
        
@@ -142,12 +147,14 @@ public class TurmasDAO {
              conexaocurso.executaSql("select * from cursos where idCurso="+codCurso);
             conexaocurso.result.first();
             nomeCurso = conexaocurso.result.getString("nomeCurso");
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro ao buscar o codigo do Curso"+ex);
         }
         conexaocurso.desconecta();
     }
-    
+    //----------------------------------------------------------------------------------------
+   
     public void excluirTurmas (ModeloTurmas mod){
         conexao.conexao();
         

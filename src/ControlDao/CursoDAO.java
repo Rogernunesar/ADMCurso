@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
+package ControlDao;
 
-import Modelo.ModeloCursos;
+import Model.ModeloCursos;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;

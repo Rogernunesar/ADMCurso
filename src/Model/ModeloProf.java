@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Model;
 
 /**
  *
- * @Matheus
+ * @author Rogerio
  */
 public class ModeloProf {
     private int idprof;
@@ -18,9 +18,7 @@ public class ModeloProf {
     private String pesquisar;
 
     public int getIdprofessor() {
-        
         return idprof;
-        
     }
 
     public void setIdprofessor(int idprofessor) {

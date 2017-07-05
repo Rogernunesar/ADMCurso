@@ -138,6 +138,11 @@ public class CadastroTurmas extends javax.swing.JFrame {
 
         jComboBoxCursos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxCursos.setEnabled(false);
+        jComboBoxCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCursosActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Fim do Curso:");
 
@@ -538,6 +543,10 @@ public void preencherCurso(){
                         "and a.tur_idCurso= c.idCurso\n" +
                         "order by nomeTurmas;");
     }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jComboBoxCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCursosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCursosActionPerformed
 
     public void preencherTabela(String sql){
         ArrayList dados = new ArrayList();

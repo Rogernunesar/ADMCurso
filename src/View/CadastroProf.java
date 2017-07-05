@@ -5,10 +5,10 @@
  */
 package View;
 
-import Dao.ConexaoBD;
-import Dao.ProfDAO;
-import Modelo.ModeloProf;
-import Modelo.ModeloTabela;
+import ControlDao.ConexaoBD;
+import ControlDao.ProfDAO;
+import Model.ModeloProf;
+import Model.ModeloTabela;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -16,7 +16,7 @@ import javax.swing.ListSelectionModel;
 
 /**
  *
- * @Matheus
+ * @author Azury@math
  */
 public class CadastroProf extends javax.swing.JFrame {
      ConexaoBD conexao = new ConexaoBD();
@@ -26,7 +26,7 @@ public class CadastroProf extends javax.swing.JFrame {
     
     
     public CadastroProf() {
-        this.setTitle(" CADASTRO DE PROFESSOR ");
+        this.setTitle(" CADASTRO DE PROFESSOR");
         this.setResizable(false);
         initComponents();
         preencherTabela("select * from professores order by nomeProf");
@@ -294,19 +294,19 @@ public class CadastroProf extends javax.swing.JFrame {
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
          if(jTextFNome.getText().isEmpty()){
-          JOptionPane.showMessageDialog(null, " Campo faltante, Preencha o campo NOME para continuar");
+          JOptionPane.showMessageDialog(null, "Preencha o campo NOME para continuar");
           jTextFNome.requestFocus();
           }else{
                 if(jTextFEmail.getText().isEmpty()){
-                   JOptionPane.showMessageDialog(null, " Campo faltante, Preencha o campo EMAIL para continuar");
+                   JOptionPane.showMessageDialog(null, "Preencha o campo EMAIL para continuar");
                    jTextFEmail.requestFocus();
                   }else{
                         if(jTextFHoraAula.getText().isEmpty()){
-                           JOptionPane.showMessageDialog(null, " Campo faltante,Preencha o campo VALOR HORA para continuar");
+                           JOptionPane.showMessageDialog(null, "Preencha o campo VALOR HORA para continuar");
                            jTextFHoraAula.requestFocus();
                           }else {
                                  if(jTextFCurso.getText().isEmpty()){
-                                    JOptionPane.showMessageDialog(null, "Campo faltante, Preencha o campo FORMAÇÃO  para continuar");
+                                    JOptionPane.showMessageDialog(null, "Preencha o campo FORMAÇÃO  para continuar");
                                     jTextFCurso.requestFocus();
                                     
                                    }else{
@@ -336,11 +336,11 @@ public class CadastroProf extends javax.swing.JFrame {
             modp.setValorhora(jTextFHoraAula.getText());
             modp.setFormacao(jTextFCurso.getText());
             controle.Editar(modp);
-            jTextFIdProfessor.setText(" ");
-            jTextFNome.setText(" ");
-            jTextFEmail.setText(" ");
-            jTextFHoraAula.setText(" ");
-            jTextFCurso.setText(" ");
+            jTextFIdProfessor.setText("");
+            jTextFNome.setText("");
+            jTextFEmail.setText("");
+            jTextFHoraAula.setText("");
+            jTextFCurso.setText("");
             jTextFNome.setEnabled(false);
             jTextFEmail.setEnabled(false);
             jTextFHoraAula.setEnabled(false);

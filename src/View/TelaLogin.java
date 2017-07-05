@@ -5,7 +5,7 @@
  */
 package View;
 
-import Dao.ConexaoBD;
+import ControlDao.ConexaoBD;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -36,8 +36,8 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPasswordSenha = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonEntrar = new javax.swing.JButton();
+        jButtonSair = new javax.swing.JButton();
         jTextFieldUsuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
@@ -51,21 +51,21 @@ public class TelaLogin extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
         getContentPane().add(jPasswordSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 121, 30));
 
-        jButton1.setText("ENTRAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEntrar.setText("ENTRAR");
+        jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonEntrarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 85, 30));
+        getContentPane().add(jButtonEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 85, 30));
 
-        jButton2.setText("SAIR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSair.setText("SAIR");
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonSairActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 85, 30));
+        getContentPane().add(jButtonSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 85, 30));
         getContentPane().add(jTextFieldUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 121, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/ferramentas-mudam-educacao.jpg"))); // NOI18N
@@ -75,7 +75,7 @@ public class TelaLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
           conexao.conexao();
          try {
              conexao.executaSql("select * from usuario where nameUse ='"+jTextFieldUsuario.getText()+"'");
@@ -90,16 +90,16 @@ public class TelaLogin extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(rootPane,"Senha ou Usuário não conferem!");
                     }
          } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(rootPane,"Senha ou Usuário não conferem!"+ex);
+           JOptionPane.showMessageDialog(rootPane,"Senha ou Usuário não conferem!");
          }
          conexao.desconecta();
           //if(!jTextFieldUsuario.getText().equals("admin")||!jTextFieldUsuario.getText().equals("admin")){
           // JOptionPane.showMessageDialog(this, "Usuario e senha não conferem");        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonEntrarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
        System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,8 +138,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonEntrar;
+    private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

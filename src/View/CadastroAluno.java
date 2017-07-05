@@ -6,11 +6,10 @@
 package View;
 
 
-import Dao.ConexaoBD;
-import Dao.AlunoDAO;
-import Modelo.ModeloAluno;
-import Modelo.ModeloTabela;
-import java.sql.Date;
+import ControlDao.ConexaoBD;
+import ControlDao.AlunoDAO;
+import Model.ModeloAluno;
+import Model.ModeloTabela;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -18,8 +17,9 @@ import javax.swing.ListSelectionModel;
 
 
 
+
 /**
- * @author Raphael
+ * @author Rogerio
  */
 public class CadastroAluno extends javax.swing.JFrame {
      ModeloAluno mod = new ModeloAluno();
@@ -31,6 +31,10 @@ public class CadastroAluno extends javax.swing.JFrame {
         this.setTitle("CADASTRO DE ALUNO");
         this.setResizable(false);
         preencherTabela("select * from alunos order by nomeAluno");
+        
+        
+
+         
     }     
     
     @SuppressWarnings("unchecked")
@@ -41,13 +45,13 @@ public class CadastroAluno extends javax.swing.JFrame {
         jTextFIDaluno = new javax.swing.JTextField();
         jTextFNome = new javax.swing.JTextField();
         jTextFEmail = new javax.swing.JTextField();
-        jTextFFone = new javax.swing.JTextField();
         jTextFNascmento = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jTextFFone = new javax.swing.JFormattedTextField();
         jbNovo = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
@@ -74,8 +78,6 @@ public class CadastroAluno extends javax.swing.JFrame {
 
         jTextFEmail.setEnabled(false);
 
-        jTextFFone.setEnabled(false);
-
         jTextFNascmento.setEnabled(false);
 
         jLabel1.setText("Codigo:");
@@ -87,6 +89,8 @@ public class CadastroAluno extends javax.swing.JFrame {
         jLabel4.setText(" Nascimento:");
 
         jLabel5.setText("Fone:");
+
+        jTextFFone.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,9 +106,9 @@ public class CadastroAluno extends javax.swing.JFrame {
                             .addComponent(jTextFEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFFone, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addContainerGap(84, Short.MAX_VALUE))
+                            .addComponent(jLabel5)
+                            .addComponent(jTextFFone, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(45, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -140,7 +144,7 @@ public class CadastroAluno extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFIDaluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -150,7 +154,7 @@ public class CadastroAluno extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jbNovo.setText("Novo");
@@ -209,6 +213,12 @@ public class CadastroAluno extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(JTableAluno);
 
+        jTextFPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFPesquisaActionPerformed(evt);
+            }
+        });
+
         jbCancelar.setText("Cancelar");
         jbCancelar.setEnabled(false);
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -246,9 +256,9 @@ public class CadastroAluno extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbSalvar)
@@ -259,18 +269,19 @@ public class CadastroAluno extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbExcluir)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbPesquisar)))
+                        .addComponent(jbPesquisar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(21, 21, 21)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addComponent(jTextFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addGap(33, 33, 33))
         );
 
-        setSize(new java.awt.Dimension(680, 405));
+        setSize(new java.awt.Dimension(680, 435));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
@@ -315,7 +326,7 @@ public class CadastroAluno extends javax.swing.JFrame {
             mod.setNomealuno(jTextFNome.getText());
             mod.setEmailaluno(jTextFEmail.getText());
             mod.setFonealuno(jTextFFone.getText());
-            mod.setNascaluno(Date.valueOf(jTextFNascmento.getText()));
+            mod.setNascaluno(jTextFNascmento.getText());
             controle.Salvar(mod);
             jTextFIDaluno.setText(" ");
             jTextFNome.setText("");
@@ -336,7 +347,7 @@ public class CadastroAluno extends javax.swing.JFrame {
             mod.setNomealuno(jTextFNome.getText());
             mod.setEmailaluno(jTextFEmail.getText());
             mod.setFonealuno(jTextFFone.getText());
-            mod.setNascaluno(Date.valueOf(jTextFNascmento.getText()));
+            mod.setNascaluno(jTextFNascmento.getText());
             controle.Editar(mod);
             jTextFIDaluno.setText("");
             jTextFNome.setText("");
@@ -366,7 +377,7 @@ public class CadastroAluno extends javax.swing.JFrame {
         jTextFNome.setText(model.getNomealuno());
         jTextFEmail.setText(model.getEmailaluno());
         jTextFFone.setText(model.getFonealuno());
-        jTextFNascmento.setText(String.valueOf(model.getNascaluno()));
+        jTextFNascmento.setText(model.getNascaluno());
         preencherTabela("select * from alunos where nomeAluno like'%"+mod.getPesquisa()+"%'");
         jTextFIDaluno.setText("");
         if(jTextFNome.getText().isEmpty()){//nao deixar o campos em branco
@@ -441,11 +452,14 @@ public class CadastroAluno extends javax.swing.JFrame {
          } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null,"Erro ao selecionar dados"+ex);
          }
-        
-        
+
         conexao.desconecta();
         BotaoPesquisar();
     }//GEN-LAST:event_JTableAlunoMouseClicked
+
+    private void jTextFPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFPesquisaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFPesquisaActionPerformed
    
     //Declaração dos metodos para ativar e desativar os botões do formulario
     public void BotaoNovo()
@@ -499,6 +513,7 @@ public class CadastroAluno extends javax.swing.JFrame {
       jbCancelar.setEnabled(true);
       jbEditar.setEnabled(true);
       jbExcluir.setEnabled(true);
+      jbNovo.setEnabled(false);
     }
      
     public void preencherTabela(String sql){
@@ -581,7 +596,7 @@ public class CadastroAluno extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFEmail;
-    private javax.swing.JTextField jTextFFone;
+    private javax.swing.JFormattedTextField jTextFFone;
     private javax.swing.JTextField jTextFIDaluno;
     private javax.swing.JTextField jTextFNascmento;
     private javax.swing.JTextField jTextFNome;

@@ -1,10 +1,10 @@
-package Modelo;
+package Model;
 
 import java.sql.Date;
 
 /**
  *
- * @author Raphael
+ * @author Rogerio
  */
 public class ModeloAluno {
     
@@ -12,7 +12,7 @@ public class ModeloAluno {
     private String nomealuno;
     private String emailaluno;
     private String fonealuno;
-    private Date nascaluno;
+    private String nascaluno;
     private String pesquisa;
     
 
@@ -48,11 +48,11 @@ public class ModeloAluno {
         this.fonealuno = fonealuno;
     }
 
-    public Date getNascaluno() {
+    public String getNascaluno() {
         return nascaluno;
     }
 
-    public void setNascaluno(Date nascaluno) {
+    public void setNascaluno(String nascaluno) {
         this.nascaluno = nascaluno;
     }
 
