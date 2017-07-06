@@ -48,8 +48,8 @@ REFERENCES PROFESSORES (idProf)
   ON UPDATE NO ACTION
   );
 
-INSERT INTO TURMAS(idTurmas, tur_idProf, tur_idCurso, dataInicio, dataFinal, cargaHora )
-VALUES (1, 1, 1,'2017-11-21', '2018-11-21', 80);
+INSERT INTO TURMAS(idTurmas, tur_idProf, tur_idCurso, dataInicio, dataFinal, cargaHora, nomeTurmas )
+VALUES (1, 1, 1,'2017-11-21', '2018-11-21', 80,'TurmaA');
 
  CREATE TABLE ALUNOS(
  idAluno      INT NOT NULL,
