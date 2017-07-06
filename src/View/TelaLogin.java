@@ -39,6 +39,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jButtonEntrar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
         jTextFieldUsuario = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -66,6 +67,7 @@ public class TelaLogin extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 85, 30));
         getContentPane().add(jTextFieldUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 121, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, 0, 390, 160));
 
         pack();
         setLocationRelativeTo(null);
@@ -74,7 +76,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
           conexao.conexao();
          try {
-             conexao.executaSql("select * from usuario where nameUse ='"+jTextFieldUsuario.getText()+"'");
+             conexao.executaSql("select * from usuario where nomeUse ='"+jTextFieldUsuario.getText()+"'");
              conexao.result.first();
              if(conexao.result.getString("senhaUse").equals(jPasswordSenha.getText())){
                TelaPrinciapal tela = new TelaPrinciapal(jTextFieldUsuario.getText());
@@ -138,6 +140,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPasswordSenha;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
