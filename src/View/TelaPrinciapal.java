@@ -207,7 +207,7 @@ public class TelaPrinciapal extends javax.swing.JFrame {
 
     private void JMenuCadastroUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuCadastroUserActionPerformed
       try {
-              conexao.executaSql("select * from usuario where nameUse='"+jLabelUsuario.getText()+"'");
+              conexao.executaSql("select * from usuario where nomeUse='"+jLabelUsuario.getText()+"'");
               conexao.result.first();
               if(conexao.result.getString("tipoUser").equals("Administrador"))
               {
@@ -250,7 +250,7 @@ public class TelaPrinciapal extends javax.swing.JFrame {
 
     private void jMenuCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuCadastroMouseClicked
           try {
-              conexao.executaSql("select * from usuario where nameUse='"+jLabelUsuario.getText()+"'");
+              conexao.executaSql("select * from usuario where nomeUse='"+jLabelUsuario.getText()+"'");
               conexao.result.first();
               if(conexao.result.getString("tipoUser").equals("Administrador"))
               {
