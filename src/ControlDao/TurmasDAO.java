@@ -39,14 +39,14 @@ public class TurmasDAO {
              conexao.result.next();
              int id = conexao.result.getInt(1);
              id++;
-            PreparedStatement pst = conexao.con.prepareStatement("insert into turmas(idTurmas, tur_idProf, tur_idCurso, nomeTurmas, dataInicio, dataFinal, cargaHora)values(?,?,?,?,?,?,?)");
+            PreparedStatement pst = conexao.con.prepareStatement("insert into turmas(idTurmas, tur_idProf, tur_idCurso, dataInicio, dataFinal, cargaHora, nomeTurmas)values(?,?,?,?,?,?,?)");
             pst.setInt(1, id);
             pst.setInt(2, idProf);
             pst.setInt(3, idCurso);
-            pst.setString(4, turmas.getNometurma());
-            pst.setDate(5, new java.sql.Date(turmas.getDatainicio().getTime()));
-            pst.setDate(6, new java.sql.Date(turmas.getDatafinal().getTime()));
-            pst.setInt(7, turmas.getCargahora());
+            pst.setDate(4, new java.sql.Date(turmas.getDatainicio().getTime()));
+            pst.setDate(5, new java.sql.Date(turmas.getDatafinal().getTime()));
+            pst.setInt(6, turmas.getCargahora());
+            pst.setString(7, turmas.getNometurma());
             pst.execute();
             JOptionPane.showMessageDialog(null,"Turma inserida com sucesso");
         } catch (SQLException ex) {
@@ -62,15 +62,15 @@ public class TurmasDAO {
          
         try {
            
-            PreparedStatement pst = conexao.con.prepareStatement("update turmas set tur_idProf=?, tur_idCurso=?, nomeTurmas=?, dataInicio=?, dataFinal=?, cargaHora=? where idTurmas=?");
+            PreparedStatement pst = conexao.con.prepareStatement("update turmas set tur_idProf=?, tur_idCurso=?, dataInicio=?, dataFinal=?, cargaHora=?, nomeTurmas=? where idTurmas=?");
             
             pst.setInt(1, idProf);
             pst.setInt(2, idCurso);
-            pst.setString(3, turmas.getNometurma());
-            pst.setDate(4, new java.sql.Date(turmas.getDatainicio().getTime()));
-            pst.setDate(5, new java.sql.Date(turmas.getDatafinal().getTime()));
-            pst.setInt(6, turmas.getCargahora());
-            pst.setInt(7, turmas.getIdturmas());
+            pst.setDate(3, new java.sql.Date(turmas.getDatainicio().getTime()));
+            pst.setDate(4, new java.sql.Date(turmas.getDatafinal().getTime()));
+            pst.setInt(5, turmas.getCargahora());
+            pst.setInt(6, turmas.getIdturmas());
+            pst.setString(7, turmas.getNometurma());
             pst.execute();
             JOptionPane.showMessageDialog(null,"Turmas alteradas com sucesso");
         } catch (SQLException ex) {
@@ -88,10 +88,10 @@ public class TurmasDAO {
             modturma.setIdturmas(conexao.result.getInt("idTurmas"));
             buscarNomeProf(conexao.result.getInt("tur_idProf"));
             buscarNomeCurso(conexao.result.getInt("tur_idCurso"));
-            modturma.setNometurma(conexao.result.getString("nomeTurmas"));
             modturma.setDatainicio(conexao.result.getDate("dataInicio"));
             modturma.setDatafinal(conexao.result.getDate("dataFinal"));
             modturma.setCargahora(conexao.result.getInt("cargaHora"));
+            modturma.setNometurma(conexao.result.getString("nomeTurmas"));
             modturma.setNomeprof(nomProf);
             modturma.setNomecurso(nomeCurso);      
             

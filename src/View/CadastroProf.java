@@ -440,7 +440,7 @@ public class CadastroProf extends javax.swing.JFrame {
                 dados.add(new Object[]{conexao.result.getInt("idProf"),conexao.result.getString("nomeProf"),conexao.result.getString("emailProf"), conexao.result.getString("valorHora"), conexao.result.getString("formacao")});  
              }while(conexao.result.next());
          } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane,"Digite outro nome");
+            JOptionPane.showMessageDialog(rootPane,"Digite outro nome!");
          }
          ModeloTabela modelo = new ModeloTabela(dados, colunas);
          

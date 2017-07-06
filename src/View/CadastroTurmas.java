@@ -367,7 +367,6 @@ public void preencherCurso(){
        jTextFieldIdTurmas.setText(String.valueOf(turma1.getIdturmas()));
        jComboBoxProf.setSelectedItem(turma1.getNomeprof());
        jComboBoxCursos.setSelectedItem(turma1.getNomecurso());
-       jTextFieldNomeTurma.setText(turma1.getNometurma());
        jDateChooserinicio.setDate(turma1.getDatainicio());
        jDateChooserfim.setDate(turma1.getDatafinal());
        jTextFieldCargaHora.setText(String.valueOf(turma1.getCargahora()));
@@ -388,11 +387,11 @@ public void preencherCurso(){
         try {
             conexao.result.first();
             
-           jTextFieldIdTurmas.setText(String.valueOf(conexao.result.getInt("idTurmas")));
-            jTextFieldNomeTurma.setText(conexao.result.getString("nomeTurmas"));
+            jTextFieldIdTurmas.setText(String.valueOf(conexao.result.getInt("idTurmas"))); 
             jDateChooserinicio.setDate(conexao.result.getDate("dataInicio"));
             jDateChooserfim.setDate(conexao.result.getDate("dataFinal"));
             jTextFieldCargaHora.setText(String.valueOf(conexao.result.getInt("cargaHora")));
+            jTextFieldNomeTurma.setText(conexao.result.getString("nomeTurmas"));
             ConexaoBD conexPesquisar = new ConexaoBD();
             conexPesquisar.conexao();
             conexPesquisar.executaSql("select * from professores where idProf = "+conexao.result.getInt("tur_idProf"));
@@ -461,10 +460,10 @@ public void preencherCurso(){
                 {
                 modturma.setNomeprof((String)jComboBoxProf.getSelectedItem());
                 modturma.setNomecurso((String)jComboBoxCursos.getSelectedItem());
-                modturma.setNometurma(jTextFieldNomeTurma.getText());
                 modturma.setDatainicio(jDateChooserinicio.getDate());
                 modturma.setDatafinal(jDateChooserfim.getDate());
                 modturma.setCargahora(Integer.parseInt(jTextFieldCargaHora.getText()));
+                modturma.setNometurma(jTextFieldNomeTurma.getText());
                 turmadao.Salvar(modturma);
 
                 jTextFieldNomeTurma.setText("");
@@ -492,10 +491,10 @@ public void preencherCurso(){
                  modturma.setIdturmas(Integer.parseInt(jTextFieldIdTurmas.getText()));
                  modturma.setNomeprof((String)jComboBoxProf.getSelectedItem());
                  modturma.setNomecurso((String)jComboBoxCursos.getSelectedItem());
-                 modturma.setNometurma(jTextFieldNomeTurma.getText());
                  modturma.setDatainicio(jDateChooserinicio.getDate());
                  modturma.setDatafinal(jDateChooserfim.getDate());
                  modturma.setCargahora(Integer.parseInt(jTextFieldCargaHora.getText()));
+                 modturma.setNometurma(jTextFieldNomeTurma.getText());
                  turmadao.EditarTurmas(modturma);
                  jTextFieldNomeTurma.setText("");
                  jDateChooserinicio.setDate(null);
