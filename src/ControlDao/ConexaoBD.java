@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author Rogerio
  */
-public class ConexaoBD {
+   public class ConexaoBD {
    public Statement stm;
    public ResultSet result;
    private String driver ="com.mysql.jdbc.Driver";
