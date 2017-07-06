@@ -8,7 +8,7 @@ CREATE TABLE CURSOS(
 idCurso        INT NOT NULL,
 nomeCurso      VARCHAR(40),
 reqbasico      VARCHAR(40),
-cargaHora   SMALLINT,
+cargaHora      SMALLINT,
 precoCurso     DOUBLE,
 CONSTRAINT PK_IDCURSO  PRIMARY KEY(idCurso)
 ); 
@@ -31,10 +31,10 @@ CREATE TABLE TURMAS(
 idTurmas      INT NOT NULL,
 tur_idProf    INT NOT NULL,
 tur_idCurso   INT NOT NULL,
-nomeTurmas    VARCHAR(40)NOT NULL;
 dataInicio    DATE NULL,
 dataFinal     DATE NULL,
 cargaHora     SMALLINT,
+nomeTurmas    VARCHAR(40)NOT NULL;
 CONSTRAINT PK_IDTURMAS PRIMARY KEY (idTurmas),
 INDEX TURMAS_FKINDEX1(tur_idCurso),
 INDEX TURMAS_FKINDEX2(tur_idProf),
