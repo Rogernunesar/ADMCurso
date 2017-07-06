@@ -7,13 +7,13 @@ USE ADMCURSOS;
 CREATE TABLE CURSOS(
 idCurso        INT NOT NULL,
 nomeCurso      VARCHAR(40),
-requistoBasic  VARCHAR(60),
-cargaHoraria   SMALLINT,
+reqbasico      VARCHAR(40),
+cargaHora   SMALLINT,
 precoCurso     DOUBLE,
 CONSTRAINT PK_IDCURSO  PRIMARY KEY(idCurso)
 ); 
 
-INSERT INTO CURSOS(idCurso, nomeCurso, requistoBasic, cargaHoraria, precoCurso)
+INSERT INTO CURSOS(idCurso, nomeCurso, reqbasico, cargaHora, precoCurso)
 VALUES (1, 'office', 'basico', 80, 50.00);
 
 CREATE TABLE PROFESSORES(
