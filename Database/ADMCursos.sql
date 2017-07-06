@@ -90,7 +90,8 @@ nomeUse   VARCHAR(40) NOT NULL,
 senhaUse  VARCHAR(40) NOT NULL,
 tipoUser  VARCHAR(20) NULL,
 CONSTRAINT PK_IDUSE PRIMARY KEY (idUse));
-
+INSERT INTO usuario(idUse, nomeUse, senhaUse, tipoUser)
+VALUES (1, 'admin', 'admin', 'Administrador');
 
 
 show tables;
