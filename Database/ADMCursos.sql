@@ -13,6 +13,9 @@ precoCurso     DOUBLE,
 CONSTRAINT PK_IDCURSO  PRIMARY KEY(idCurso)
 ); 
 
+INSERT INTO CURSOS(idCurso, nomeCurso, requistoBasic, cargaHoraria, precoCurso)
+VALUES (1, 'office', 'basico', 80, 50.00);
+
 CREATE TABLE PROFESSORES(
 idProf        INT NOT NULL,
 nomeProf      VARCHAR (40),
@@ -21,11 +24,14 @@ valorHora     VARCHAR (15),
 formacao      VARCHAR (40),
 CONSTRAINT PK_IDPROF PRIMARY KEY (idProf)
 );
+INSERT INTO PROFESSORES(idProf, nomeProf, emailProf, valorHora, formacao)
+VALUES (1, 'maria jose', 'maria@maria',' 12.5', 'nivel hard');
 
 CREATE TABLE TURMAS(
 idTurmas      INT NOT NULL,
 tur_idProf    INT NOT NULL,
 tur_idCurso   INT NOT NULL,
+nomeTurmas    VARCHAR(40)NOT NULL;
 dataInicio    DATE NULL,
 dataFinal     DATE NULL,
 cargaHora     SMALLINT,
@@ -42,6 +48,9 @@ REFERENCES PROFESSORES (idProf)
   ON UPDATE NO ACTION
   );
 
+INSERT INTO TURMAS(idTurmas, tur_idProf, tur_idCurso, dataInicio, dataFinal, cargaHora )
+VALUES (1, 1, 1,'2017-11-21', '2018-11-21', 80);
+
  CREATE TABLE ALUNOS(
  idAluno      INT NOT NULL,
  nomeAluno    VARCHAR(50),
@@ -49,6 +58,9 @@ REFERENCES PROFESSORES (idProf)
  foneAluno    CHAR(14),
  nascAluno    DATE,
  CONSTRAINT PK_IDALUNO PRIMARY KEY (idAluno));
+
+INSERT INTO Alunos(idAluno, nomeAluno, emailAluno, foneAluno, nascAluno)
+VALUES (1, 'joão pedro', 'jp@jp', '564585251', '1989-02-06');
 
 CREATE TABLE MATRICULAS(
  idMatriculas         INT NOT NULL ,
@@ -79,7 +91,7 @@ senhaUse  VARCHAR(40) NOT NULL,
 tipoUser  VARCHAR(20) NULL,
 CONSTRAINT PK_IDUSE PRIMARY KEY (idUse));
 
-ALTER TABLE usuario ADD tipoUser VARCHAR(20) NULL;
+
 
 show tables;
 
