@@ -435,7 +435,7 @@ public void preencherTabela(String sql){
                 dados.add(new Object[]{conexao.result.getInt("idCurso"),conexao.result.getString("nomeCurso"),conexao.result.getString("reqbasico"), conexao.result.getString("cargahora"), conexao.result.getString("precoCurso")});  
              }while(conexao.result.next());
          } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane,"Digite outro nome");
+            JOptionPane.showMessageDialog(rootPane,"Digite outro nome!!");
          }
          ModeloTabela modelo = new ModeloTabela(dados, colunas);
          
