@@ -22,7 +22,7 @@ public class UserDAO {
     {
         conect.conexao();
         try {
-            PreparedStatement pst = conect.con.prepareStatement("insert into usuario (nameUse, senhaUse, tipoUser)values(?,?,?)");
+            PreparedStatement pst = conect.con.prepareStatement("insert into usuario (nomeUse, senhaUse, tipoUser)values(?,?,?)");
             pst.setString(1, mod.getNomeuser());
             pst.setString(2, mod.getSenhauser());
             pst.setString(3, mod.getTipouser());
@@ -41,7 +41,7 @@ public class UserDAO {
        conect.conexao(); 
        try
         {
-            PreparedStatement pst = conect.con.prepareStatement("UPDATE usuario SET  nameUse=?, senhaUse=?, tipoUser=? WHERE idUse=?");
+            PreparedStatement pst = conect.con.prepareStatement("UPDATE usuario SET  nomeUse=?, senhaUse=?, tipoUser=? WHERE idUse=?");
             
             pst.setString(1, mod.getNomeuser());
             pst.setString(2, mod.getSenhauser());
@@ -59,7 +59,7 @@ public class UserDAO {
      public ModeloUser buscarUser(ModeloUser mod)
     {
         conect.conexao();
-        conect.executaSql("select * from usuario where nameUse like'%"+mod.getPesquisa()+"%'");
+        conect.executaSql("select * from usuario where nomeUse like'%"+mod.getPesquisa()+"%'");
         
         try {
             conect.result.first();
